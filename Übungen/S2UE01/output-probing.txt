@@ -1,0 +1,211 @@
+0: India
+1: Azerbaijan
+2: Indonesia
+3: Ghana
+4: Lebanon
+5: Lesotho
+6: Cyprus
+7: Saint Kitts and Nevis
+8: Saint Lucia
+9: Saint Vincent and the Grenadines
+10: Djibouti
+11: Gabon
+12: Gambia
+13: Holy See
+14: Croatia
+15: Fiji
+16: Finland
+17: Albania
+18: Algeria
+19: Equatorial Guinea
+20: Honduras
+21: Mexico
+22: Samoa
+23: San Marino
+24: Sao Tome and Principe
+25: Saudi Arabia
+26: Kuwait
+27: Sierra Leone
+28: Haiti
+29: Singapore
+30: Spain
+31: Sweden
+32: Switzerland
+33: Tajikistan
+34: Tanzania
+35: Czechia (Czech Republic)
+36: Ecuador
+37: Nepal
+38: Netherlands
+39: New Zealand
+40: Thailand
+41: Togo
+42: Belarus
+43: Belgium
+44: Belize
+45: Benin
+46: Côte d'Ivoire
+47: Jordan
+48: Eritrea
+49: Luxembourg
+50: Timor-Leste
+51: Tonga
+52: Uganda
+53: Yemen
+54: Afghanistan
+55: Vanuatu
+56: Zimbabwe
+57: 
+58: 
+59: Central African Republic
+60: 
+61: 
+62: Jamaica
+63: Japan
+64: 
+65: France
+66: 
+67: Australia
+68: Austria
+69: Peru
+70: Syria
+71: 
+72: 
+73: Oman
+74: 
+75: Andorra
+76: Angola
+77: Antigua and Barbuda
+78: Democratic Republic of the Congo
+79: Denmark
+80: Estonia
+81: Eswatini (fmr. "Swaziland")
+82: Greece
+83: Grenada
+84: Bulgaria
+85: Burkina Faso
+86: Burundi
+87: El Salvador
+88: Kazakhstan
+89: Sri Lanka
+90: Vietnam
+91: 
+92: Trinidad and Tobago
+93: 
+94: 
+95: 
+96: Laos
+97: Latvia
+98: Moldova
+99: Monaco
+100: Kiribati
+101: Cuba
+102: Mongolia
+103: Iceland
+104: Montenegro
+105: Morocco
+106: Ethiopia
+107: Mozambique
+108: 
+109: Uruguay
+110: 
+111: 
+112: Slovakia
+113: Madagascar
+114: Malawi
+115: Malaysia
+116: Iran
+117: Iraq
+118: Ireland
+119: Liberia
+120: Libya
+121: Bolivia
+122: Bosnia and Herzegovina
+123: Botswana
+124: Liechtenstein
+125: Lithuania
+126: Maldives
+127: Georgia
+128: Germany
+129: Bhutan
+130: Mali
+131: Malta
+132: Marshall Islands
+133: Mauritania
+134: Mauritius
+135: Micronesia
+136: Namibia
+137: Bahamas
+138: Bahrain
+139: Bangladesh
+140: Barbados
+141: Colombia
+142: Comoros
+143: Congo (Congo-Brazzaville)
+144: Costa Rica
+145: Israel
+146: Chad
+147: Chile
+148: China
+149: Kyrgyzstan
+150: Nauru
+151: Egypt
+152: Nicaragua
+153: Niger
+154: Cabo Verde
+155: Cambodia
+156: Cameroon
+157: Canada
+158: Dominica
+159: Dominican Republic
+160: Nigeria
+161: North Korea
+162: North Macedonia
+163: Norway
+164: Pakistan
+165: Palau
+166: Palestine State
+167: Panama
+168: Papua New Guinea
+169: Guatemala
+170: Guinea
+171: Guinea-Bissau
+172: Guyana
+173: Paraguay
+174: Italy
+175: Philippines
+176: Myanmar (formerly Burma)
+177: Poland
+178: Portugal
+179: Russia
+180: Senegal
+181: Qatar
+182: Romania
+183: Serbia
+184: Seychelles
+185: Slovenia
+186: Hungary
+187: Sudan
+188: Suriname
+189: Tunisia
+190: Turkey
+191: Argentina
+192: Armenia
+193: Turkmenistan
+194: Tuvalu
+195: Kenya
+196: Ukraine
+197: Uzbekistan
+198: Venezuela
+199: Solomon Islands
+200: Somalia
+201: South Africa
+202: South Korea
+203: Rwanda
+204: South Sudan
+205: United Arab Emirates
+206: United Kingdom
+207: United States of America
+208: Brazil
+209: Brunei
+210: Zambia

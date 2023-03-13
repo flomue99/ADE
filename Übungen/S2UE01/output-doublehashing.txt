@@ -1,0 +1,211 @@
+0: India
+1: Azerbaijan
+2: Somalia
+3: Ghana
+4: Latvia
+5: Togo
+6: Cyprus
+7: Sudan
+8: Jordan
+9: Sweden
+10: Djibouti
+11: Gabon
+12: Holy See
+13: Botswana
+14: Croatia
+15: Fiji
+16: Tanzania
+17: Albania
+18: Malawi
+19: Austria
+20: Nauru
+21: Kazakhstan
+22: 
+23: Romania
+24: Zimbabwe
+25: Guinea
+26: Angola
+27: Germany
+28: Haiti
+29: Paraguay
+30: Timor-Leste
+31: Belgium
+32: Micronesia
+33: Finland
+34: Tonga
+35: Czechia (Czech Republic)
+36: Slovakia
+37: Mexico
+38: Bosnia and Herzegovina
+39: Dominican Republic
+40: South Sudan
+41: Maldives
+42: Belarus
+43: Luxembourg
+44: Thailand
+45: Malta
+46: Iraq
+47: Zambia
+48: Eritrea
+49: Philippines
+50: Côte d'Ivoire
+51: Madagascar
+52: Mauritius
+53: Saint Lucia
+54: Afghanistan
+55: Netherlands
+56: Barbados
+57: 
+58: Cameroon
+59: Central African Republic
+60: Samoa
+61: 
+62: Jamaica
+63: Spain
+64: Turkey
+65: France
+66: Lithuania
+67: Australia
+68: Tajikistan
+69: Lebanon
+70: 
+71: Vanuatu
+72: Tuvalu
+73: Oman
+74: Kuwait
+75: Andorra
+76: Democratic Republic of the Congo
+77: Estonia
+78: Guyana
+79: Costa Rica
+80: Solomon Islands
+81: United States of America
+82: Greece
+83: Canada
+84: Bulgaria
+85: El Salvador
+86: Switzerland
+87: Lesotho
+88: Slovenia
+89: Belize
+90: Sri Lanka
+91: Japan
+92: Marshall Islands
+93: Indonesia
+94: 
+95: Chile
+96: Laos
+97: Moldova
+98: 
+99: Uganda
+100: Kiribati
+101: Cuba
+102: Nigeria
+103: Iceland
+104: Niger
+105: Uruguay
+106: Ethiopia
+107: Saudi Arabia
+108: United Kingdom
+109: North Korea
+110: Papua New Guinea
+111: Vietnam
+112: Bahrain
+113: Egypt
+114: Libya
+115: Saint Vincent and the Grenadines
+116: Iran
+117: Liberia
+118: Congo (Congo-Brazzaville)
+119: Nicaragua
+120: Peru
+121: Bolivia
+122: Armenia
+123: Sierra Leone
+124: South Korea
+125: 
+126: 
+127: Georgia
+128: 
+129: Bhutan
+130: Namibia
+131: San Marino
+132: New Zealand
+133: Syria
+134: Brunei
+135: Gambia
+136: Mali
+137: Bahamas
+138: Colombia
+139: Mongolia
+140: North Macedonia
+141: Singapore
+142: Kyrgyzstan
+143: Benin
+144: Burundi
+145: Israel
+146: Chad
+147: Cambodia
+148: Denmark
+149: Yemen
+150: 
+151: Ecuador
+152: Senegal
+153: Tunisia
+154: Cabo Verde
+155: Dominica
+156: Eswatini (fmr. "Swaziland")
+157: 
+158: 
+159: China
+160: Palestine State
+161: Sao Tome and Principe
+162: Grenada
+163: Ukraine
+164: Pakistan
+165: Nepal
+166: Panama
+167: Mozambique
+168: Ireland
+169: Guatemala
+170: Antigua and Barbuda
+171: Palau
+172: South Africa
+173: Turkmenistan
+174: Italy
+175: Serbia
+176: Mauritania
+177: Venezuela
+178: Equatorial Guinea
+179: Honduras
+180: Monaco
+181: Qatar
+182: Portugal
+183: Norway
+184: Russia
+185: Trinidad and Tobago
+186: Hungary
+187: Morocco
+188: Guinea-Bissau
+189: 
+190: Liechtenstein
+191: Argentina
+192: 
+193: Comoros
+194: Burkina Faso
+195: Kenya
+196: Montenegro
+197: Malaysia
+198: 
+199: Seychelles
+200: Saint Kitts and Nevis
+201: Suriname
+202: Algeria
+203: Rwanda
+204: United Arab Emirates
+205: Myanmar (formerly Burma)
+206: Poland
+207: Uzbekistan
+208: Brazil
+209: Bangladesh
+210: 

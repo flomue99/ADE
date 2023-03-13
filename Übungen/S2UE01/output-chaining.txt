@@ -1,0 +1,87 @@
+0:  -> Indonesia -> India
+1:  -> Uganda -> Lesotho -> Lebanon -> Azerbaijan
+3:  -> Ghana
+4:  -> Saudi Arabia -> Sao Tome and Principe -> San Marino -> Samoa -> Saint Vincent and the Grenadines -> Saint Lucia -> Saint Kitts and Nevis
+5:  -> Tonga -> Togo
+6:  -> Cyprus
+9:  -> Switzerland -> Sweden
+10:  -> Djibouti
+11:  -> Yemen -> Gambia -> Gabon
+12:  -> Honduras -> Holy See
+13:  -> Thailand
+14:  -> Croatia
+15:  -> Finland -> Fiji
+17:  -> Spain -> Algeria -> Albania
+18:  -> Mexico
+19:  -> Equatorial Guinea
+21:  -> Tanzania -> Tajikistan
+25:  -> Singapore -> Sierra Leone
+26:  -> Kuwait
+28:  -> Haiti
+35:  -> New Zealand -> Netherlands -> Nepal -> Ecuador -> Czechia (Czech Republic)
+42:  -> Timor-Leste -> Côte d'Ivoire -> Benin -> Belize -> Belgium -> Belarus
+43:  -> Luxembourg
+46:  -> Jordan
+48:  -> Eritrea
+54:  -> Afghanistan
+55:  -> Vanuatu
+59:  -> Central African Republic
+62:  -> Japan -> Jamaica
+65:  -> France
+67:  -> Syria -> Austria -> Australia
+69:  -> Peru
+73:  -> Oman
+75:  -> Sri Lanka -> Antigua and Barbuda -> Angola -> Andorra
+76:  -> Vietnam -> Denmark -> Democratic Republic of the Congo
+77:  -> Eswatini (fmr. "Swaziland") -> Estonia
+79:  -> Kazakhstan
+82:  -> Grenada -> Greece
+84:  -> Burundi -> Burkina Faso -> Bulgaria
+85:  -> El Salvador
+92:  -> Trinidad and Tobago
+96:  -> Latvia -> Laos
+97:  -> Mozambique -> Morocco -> Montenegro -> Mongolia -> Monaco -> Moldova
+100:  -> Kiribati
+101:  -> Cuba
+103:  -> Iceland
+106:  -> Ethiopia
+109:  -> Uruguay
+112:  -> Slovenia -> Slovakia
+113:  -> Mauritius -> Mauritania -> Marshall Islands -> Malta -> Mali -> Maldives -> Malaysia -> Malawi -> Madagascar
+114:  -> Norway -> North Macedonia -> North Korea
+116:  -> Ireland -> Iraq -> Iran
+117:  -> Ukraine -> Lithuania -> Liechtenstein -> Libya -> Liberia
+120:  -> Seychelles -> Serbia -> Senegal
+121:  -> Botswana -> Bosnia and Herzegovina -> Bolivia
+123:  -> Zambia
+127:  -> Germany -> Georgia
+129:  -> Bhutan
+130:  -> Uzbekistan -> Nauru -> Namibia
+134:  -> Micronesia
+137:  -> Barbados -> Bangladesh -> Bahrain -> Bahamas
+138:  -> Costa Rica -> Congo (Congo-Brazzaville) -> Comoros -> Colombia
+142:  -> Kyrgyzstan
+144:  -> Zimbabwe
+145:  -> Russia -> Israel
+146:  -> China -> Chile -> Chad
+148:  -> Portugal -> Poland
+151:  -> Nigeria -> Niger -> Nicaragua -> Egypt
+154:  -> Canada -> Cameroon -> Cambodia -> Cabo Verde
+155:  -> Dominican Republic -> Dominica
+156:  -> Philippines
+162:  -> Suriname -> Sudan
+164:  -> Paraguay -> Papua New Guinea -> Panama -> Palestine State -> Palau -> Pakistan
+169:  -> Guyana -> Guinea-Bissau -> Guinea -> Guatemala
+171:  -> Venezuela
+174:  -> Italy
+176:  -> Myanmar (formerly Burma)
+179:  -> Tuvalu -> Turkmenistan -> Turkey -> Tunisia
+181:  -> Qatar
+182:  -> Romania
+186:  -> Hungary
+191:  -> Armenia -> Argentina
+195:  -> Kenya
+199:  -> South Sudan -> South Korea -> South Africa -> Somalia -> Solomon Islands
+203:  -> Rwanda
+204:  -> United States of America -> United Kingdom -> United Arab Emirates
+208:  -> Brunei -> Brazil

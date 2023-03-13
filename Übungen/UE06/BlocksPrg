@@ -1,0 +1,39 @@
+(* BlocksPrg:                                                SWa, 2022-11-16 *)
+(* ----------                                                                *)
+(* Simple demonstration of blocks and scopes in Pascal.                      *)
+(* ========================================================================= *)
+PROGRAM BlocksPrg;
+  VAR
+    a, b, c, d: INTEGER;
+
+  PROCEDURE Proc1;
+    VAR
+      a, b: INTEGER;
+
+      VAR
+        a, c: INTEGER;
+    BEGIN (* Proc2 *)
+      WriteLn('Proc2: ', a:6, ' ', b:6, ' ', c:6, ' ', d:6);
+      a := 7;
+      b := 8;
+      WriteLn('Proc2: ', a:6, ' ', b:6, ' ', c:6, ' ', d:6);
+    END; (* Proc2 *)
+
+  BEGIN (* Proc1 *)
+      WriteLn('Proc1: ', a:6, ' ', b:6, ' ', c:6, ' ', d:6);
+      a := 5;
+      b := 6;
+      Proc2;
+      WriteLn('Proc1: ', a:6, ' ', b:6, ' ', c:6, ' ', d:6);
+  END; (* Proc1 *)
+
+BEGIN (* BlocksPrg *)
+  WriteLn('            a      b      c      d');
+  a := 1;
+  b := 2;
+  c := 3;
+  d := 4;
+  WriteLn('Main:  ', a:6, ' ', b:6, ' ', c:6, ' ', d:6);
+  Proc1;
+  WriteLn('Main:  ', a:6, ' ', b:6, ' ', c:6, ' ', d:6);
+END. (* BlocksPrg *)
