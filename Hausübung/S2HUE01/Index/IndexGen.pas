@@ -12,8 +12,8 @@ PROGRAM IndexGen;
   CONST
     ef = Chr(0);       (* end of file character *)
     maxWordLen = 30;   (* max. number of characters per word *)
-    chars = ['a' .. 'z', 'ä', 'ö', 'ü', 'ß',
-             'A' .. 'Z', 'Ä', 'Ö', 'Ü'];    
+    chars = ['a' .. 'z', 'ä', 'ü', 'ö', 'ß',
+             'A' .. 'Z', 'Ä', 'Ü', 'Ö'];    
   TYPE
     Word = STRING[maxWordLen];
 
@@ -72,7 +72,6 @@ PROGRAM IndexGen;
     END; (* IF *)
   END; (* GetNextWord *)
 
-
   VAR
     txtName: STRING;
     w: Word;        (* current word *)
@@ -106,22 +105,13 @@ BEGIN (* IndexGen *)
   GetNextWord(w, lnr);
   n := 0;
   WHILE Length(w) > 0 DO BEGIN
-    WriteLn(w, ' ', lnr);
+    //WriteLn(w, ' ', lnr);
     Insert(w, lnr);
     n := n + 1;
     GetNextWord(w, lnr);
   END; (* WHILE *)
   StopTimer;
-  //WriteLn('All inserted');
-  //WriteLn;
-  //WriteLn;
-  //WriteLn('number of words: ', n);
-  //WriteLn('elapsed time:    ', ElapsedTime);
   Close(txt);
-  WriteLn;
-  WriteLn;
-  WriteHashTable;
-  
- // ReadLn;
-  
+  CreateIndex;
+  DisposeIndex;
 END. (* IndexGen *)
