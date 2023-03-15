@@ -1,4 +1,4 @@
-(* IndexGen:                                     HDO, 2002-02-28 *)
+(* IndexGen:                                       MFL, 12.03.202*)
 (* --------                                                      *)
 (* Generation of a sorted index of all words in a text file.     *)
 (* Command line:                                                 *)
@@ -12,8 +12,8 @@ PROGRAM IndexGen;
   CONST
     ef = Chr(0);       (* end of file character *)
     maxWordLen = 30;   (* max. number of characters per word *)
-    chars = ['a' .. 'z', 'ä', 'ü', 'ö', 'ß',
-             'A' .. 'Z', 'Ä', 'Ü', 'Ö'];    
+    chars = ['a' .. 'z', 'ö', 'ä', 'ü', 'ß',
+             'A' .. 'Z', 'Ö', 'Ä', 'Ü'];    
   TYPE
     Word = STRING[maxWordLen];
 
@@ -105,7 +105,6 @@ BEGIN (* IndexGen *)
   GetNextWord(w, lnr);
   n := 0;
   WHILE Length(w) > 0 DO BEGIN
-    //WriteLn(w, ' ', lnr);
     Insert(w, lnr);
     n := n + 1;
     GetNextWord(w, lnr);

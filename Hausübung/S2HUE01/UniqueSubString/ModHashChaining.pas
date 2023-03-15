@@ -1,8 +1,12 @@
+(* ModHashChaining:                                          MFL, 2023-03-14 *)
+(* ------                                                                    *)
+(* Create hashtable with chaining                                            *)
+(* ========================================================================= *)
 UNIT ModHashChaining;
 INTERFACE
   PROCEDURE Insert(str: String);
-  PROCEDURE WriteHashtable;
-  FUNCTION CountEntries: INTEGER;
+  FUNCTION CountEntries: LONGINT;
+  PROCEDURE DisposeHashTable;
 IMPLEMENTATION
 USES ModHashFunctions;
 
@@ -37,28 +41,10 @@ BEGIN (* Insert *)
     ht[h] := n;
   END; (* IF *)
 END; (* Insert *)
-
-PROCEDURE WriteHashtable;
-  VAR 
-    i: INTEGER;
-    n: NodePtr;
-BEGIN (* WriteHashtable *)
-  FOR i:= 0 TO M-1 DO BEGIN
-    n := ht[i];
-    IF (n <> NIL) THEN BEGIN
-      Write(i, ': ');
-      WHILE (n <> NIL) DO BEGIN
-        Write(' -> ', n^.val);
-        n := n^.next;
-      END; (* WHILE *)
-      WriteLn();
-    END; (* IF *)
-  END; (* FOR *)
-END; (* WriteHashtable *)  
-
-FUNCTION CountEntries: INTEGER;
+ 
+FUNCTION CountEntries: LONGINT;
   VAR
-    count: INTEGER;
+    count: LONGINT;
     i: INTEGER;
     n: NodePtr;
 BEGIN (* CountEntries *)
@@ -75,6 +61,27 @@ BEGIN (* CountEntries *)
   CountEntries := count;
 END; (* CountEntries *)
 
+PROCEDURE DisposeChain(VAR l: NodePtr);
+  VAR 
+    n: NodePtr;
+BEGIN (* DisposeChain *)
+  WHILE (l <> NIL) DO BEGIN
+    n := l^.next;
+    Dispose(l);
+    l := n;
+  END; (* WHILE *)
+END; (* DisposeChain *)
+
+PROCEDURE DisposeHashTable;
+  VAR
+    i: INTEGER;
+BEGIN (* DisposeHashTable *)
+  FOR i := 0 TO M-1 DO BEGIN
+    IF (ht[i] <> NIL) THEN BEGIN
+      DisposeChain(ht[i]);
+    END; (* IF *)
+  END; (* FOR *)
+END; (* DisposeHashTable *)
+
 BEGIN (* ModHashChaining *)
-  
 END. (* ModHashChaining *)

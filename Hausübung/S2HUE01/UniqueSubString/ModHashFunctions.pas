@@ -1,3 +1,7 @@
+(* Hahsfunctions:                                            MFL, 2023-03-14 *)
+(* ------                                                                    *)
+(* Create a hash for a string                                                *)
+(* ========================================================================= *)
 UNIT ModHashFunctions;
 
 INTERFACE
@@ -15,7 +19,6 @@ IMPLEMENTATION
   VAR
     h: WORD;
     i: INTEGER;
-  (* bad hash function *)
   BEGIN (* Hash2 *)
     h := 0;
     FOR i := 1 TO Length(str) DO BEGIN
@@ -25,5 +28,4 @@ IMPLEMENTATION
   END; (* Hash2 *)
 
 BEGIN (* ModHashFunctions *)
-  
 END. (* ModHashFunctions *)

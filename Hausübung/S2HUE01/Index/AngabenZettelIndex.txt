@@ -1,0 +1,226 @@
+IndexGen: index generation for text file AngabenZettel.txt
+
+                       ab | 38
+                      aba | 10
+                  abababb | 10
+                      abb | 11
+             abgabetermin | 4
+                      ach | 19, 21
+                      adf | 1
+              algorithmen | 3, 37
+                      all | 17
+                     alle | 18, 36
+                    aller | 16
+                     also | 28
+                       an | 36, 38
+                angegeben | 17
+                   anzahl | 9
+                     auch | 12, 29, 38, 39
+                     auer | 6
+                      auf | 13, 28
+               aufgerufen | 28
+              aufsteigend | 17
+                  aufwand | 5
+                      aus | 32
+                  ausgabe | 32
+         ausgabeumleitung | 29
+                   auszug | 21
+                        b | 12, 18, 29, 32
+                      bab | 10
+                       be | 13
+                   bedarf | 29
+                      bei | 29, 38
+                 beispiel | 10, 13
+              bemerkungen | 34
+                berechnet | 9
+                 bergeben | 28
+               besprochen | 34
+                     bung | 3
+                   bungen | 2
+              bungsleiter | 7
+                        d | 6
+                       da | 34
+                    dabei | 18
+                     dann | 29
+              dardeingabe | 9
+                    darin | 9
+                      das | 9, 16, 18, 34
+                     dass | 19, 20, 23, 38, 39
+                    datei | 13, 29, 32
+         dateibearbeitung | 34
+          datenstrukturen | 3
+                     dazu | 9
+                      den | 12, 13, 28
+                    denen | 18, 38
+                      der | 9, 13, 28, 31
+                      des | 16, 32
+                  deshalb | 18
+                      die | 9, 10, 13, 16, 17, 28, 32
+            dokumentieren | 37
+                       dr | 5, 6, 7
+                       ei | 16
+                      ein | 9, 16
+               eindeutige | 8, 9, 10
+              eindeutigen | 9
+                     eine | 29, 31, 34, 36
+                    einen | 9, 16, 32
+                    einer | 16
+                    eines | 28
+                  einfach | 13
+                  eingabe | 10, 19
+                 einliest | 9
+                    eintr | 31
+                   elearn | 34
+                elearning | 12, 32
+                     engl | 9
+              enthaltenen | 9
+             entsprechend | 39
+               entwickeln | 9
+              ergebnisses | 32
+                 erkennen | 38
+              erstellende | 34
+                  erzeugt | 16
+                       es | 10, 39
+                      exe | 14
+                        f | 10, 16, 17, 32, 34, 36
+          fehlersituation | 39
+                   finden | 13, 34
+                     form | 28
+        fortgeschrittenen | 2
+             funktioniert | 39
+                        g | 7
+                       ge | 31
+                    geben | 36, 38
+                gegebenen | 16
+                generator | 15
+               generieren | 33
+                  gesucht | 16
+                     gibt | 10
+                       gr | 5, 6, 7
+                      gro | 18
+                      gut | 19
+                        h | 5
+              hashtabelle | 31
+                      hei | 20
+                    hilfe | 29
+                 hinweise | 35
+                   hrlich | 32
+                      ich | 20
+                      ihr | 12, 26, 38
+                     ihre | 32, 36, 37
+                       im | 12, 18, 32, 34
+                    immer | 36, 38
+                       in | 5, 7, 16, 17, 18, 28, 29, 34, 39
+                    indem | 32
+                    index | 15, 16, 21, 28, 32, 33
+            indexfilename | 30
+                 indexgen | 16, 27, 30, 34
+                      ing | 34
+                   inhalt | 13
+            inputfilename | 27, 30
+                      ist | 16, 17, 18
+                    jedes | 17
+                    jener | 17
+                        k | 13, 18, 28
+                    kafka | 32
+                     kann | 28, 38
+          kleinbuchstaben | 18
+          kleinschreibung | 18
+           kommandozeilen | 28
+             kommentieren | 37
+               kronberger | 7
+                     kurs | 12, 32, 34
+              kurzzeichen | 7
+                        l | 9, 10, 12, 32, 36
+          lexikographisch | 16
+                    liste | 16
+                      lle | 38
+                      man | 38
+                       mi | 4
+                  million | 13, 14
+                      mit | 12, 26, 29, 31
+                     muss | 26, 28
+                     name | 5, 28
+                      nen | 16
+                      nge | 9, 10
+                   ngeren | 12
+                    nicht | 18, 34
+                  niemand | 19
+                     nnen | 13, 18, 28
+                     noch | 34
+                  nummern | 17
+                      oop | 3
+               parameters | 28
+                      pas | 34
+                   pascal | 9, 16
+                       pi | 13, 14
+                      pro | 1
+                 programm | 9, 12, 16, 26, 34, 39
+               programmen | 38
+                   punkte | 7, 8, 15
+                        r | 10, 16, 17, 32, 34, 36
+                 reagiert | 39
+              reihenfolge | 17
+                     rter | 16, 18, 32
+          rumpelstilzchen | 20
+                        s | 5
+                 scheiden | 18
+                schreiben | 28
+                   seinen | 31
+                      sie | 9, 12, 13, 31, 32, 34, 36, 37, 38
+                     sind | 32
+                sortieren | 32
+                sortierte | 16
+               sortierter | 17
+                speichern | 9
+                       ss | 3
+                     stan | 9
+          standardausgabe | 28
+            standardeinga | 13
+                  strings | 9
+                      sub | 9
+                   sungen | 32, 36
+                sungsidee | 36
+               teilketten | 8, 9, 10
+                   testen | 12, 32
+                    testf | 38
+                     text | 9, 16, 18
+                textdatei | 16, 28
+              textdateien | 32
+                   texten | 12
+                    texts | 16
+                    thema | 34
+                    tutor | 7
+                      txt | 13, 14, 27, 30, 32
+               umgeleitet | 29
+                umgesetzt | 18
+                 umleiten | 13
+                      und | 3, 9, 10, 11, 18, 28, 37, 39
+                   unique | 9
+             uniquesubstr | 9, 14
+                    unter | 18
+             verschiedene | 32
+               verwaltung | 31
+                verwenden | 31
+                      von | 9, 12, 29
+                      vor | 32
+                 vorkommt | 18
+                  vorlage | 34
+                        w | 16, 18, 32
+                   wagner | 5
+                      wei | 19
+                   werden | 18, 28, 29
+                      wie | 19, 25
+                     wird | 28
+                    wobei | 16
+                     wort | 17, 18, 31
+                    wurde | 34
+                        x | 1
+                        z | 12, 18, 29, 32
+             zeichenweise | 9
+                   zeilen | 17
+            zeilennummern | 31
+                  ziffern | 12
+                       zu | 2, 18, 32, 34
+                      zur | 31
+                 zwischen | 18

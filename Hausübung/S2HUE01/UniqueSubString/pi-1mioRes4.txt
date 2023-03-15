@@ -1,0 +1,1 @@
+Die eingegebene Zeichenkette hat: 99992 eindeutige Teilketten

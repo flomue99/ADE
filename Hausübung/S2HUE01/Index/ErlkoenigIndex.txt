@@ -1,0 +1,144 @@
+IndexGen: index generation for text file Erlkoenig.txt
+
+                    alten | 32
+                       am | 30
+                       an | 16, 36
+                      arm | 6
+                    armen | 40, 42
+                      aus | 2
+                     bang | 9
+                   birgst | 9
+                     bist | 35
+                       bl | 22
+                   bleibe | 21
+                   blumen | 16
+                   brauch | 35
+                    bunte | 16
+                    chter | 25, 26, 30
+                chtlichen | 26
+                  chzende | 40
+                        d | 22, 30
+                      das | 2, 40, 42
+                     dein | 9
+                    deine | 34
+                      dem | 6, 16, 39
+                      den | 6, 10, 11, 26, 41
+                      der | 2, 5, 22
+                     dich | 25, 27, 34
+                      die | 32
+                      dir | 15
+                     dort | 29
+                       du | 9, 10, 14, 19, 24, 29, 35
+                    durch | 4
+                      ein | 12, 27, 37
+                       er | 6, 7, 36, 39, 40
+                   erlenk | 20
+                     erlk | 1, 2, 10, 11, 30, 37
+                 erreicht | 41
+                       es | 5, 12, 31, 32
+                        f | 26
+                    fasst | 7, 36
+                    feder | 2
+                   feiner | 24
+                        g | 17
+                      gar | 15
+                  gedicht | 2
+                      geh | 14
+                     gehn | 24
+                    genau | 31
+                geschwind | 39
+                  gesicht | 9
+                  gestalt | 34
+                    getan | 37
+                   gewalt | 35
+                   gewand | 17
+                   goethe | 2
+                     grau | 32
+                  grauset | 39
+                        h | 7, 19, 40
+                      hat | 6, 17, 37
+                       he | 41
+                      hof | 41
+                     hren | 26
+                      ich | 15, 31, 34, 35
+                      ihn | 7
+                       in | 6, 22, 40, 42
+                      ist | 5, 12
+                    jetzt | 36
+                   johann | 2
+                     kind | 5, 14, 21, 40, 42
+                    knabe | 24
+                   knaben | 6
+                     komm | 14
+                     kron | 11
+                     lden | 17
+                    leids | 37
+                    leise | 20
+                    liebe | 34
+                   liebes | 14
+                       lt | 7, 40
+                        m | 41
+                    manch | 16, 17
+                     mein | 9, 12, 19, 21, 29, 31, 36
+                    meine | 17, 25, 26
+                     mich | 34, 36
+                      mir | 14, 20, 24, 37
+                      mit | 5, 11, 14, 15, 24, 41
+                   mutter | 17
+                        n | 25, 26
+                    nacht | 4
+                       ne | 15, 34
+              nebelstreif | 12
+                    nicht | 10, 19, 29, 35
+                      nig | 1, 2, 10, 11, 20, 37
+                     nigs | 30
+                      not | 41
+                      ort | 30
+                    reihn | 26
+                   reitet | 4, 39
+                    reizt | 34
+                     rest | 19
+                     rren | 22
+                    ruhig | 21
+                        s | 22, 39
+                      sch | 15, 25, 34
+                 scheinen | 32
+                  schweif | 11
+                      seh | 31
+                      sei | 21
+                   seinem | 5
+                   seinen | 42
+                   sicher | 7
+                   siehst | 10, 29
+                     sind | 16
+                   singen | 27
+                       so | 4, 9, 32, 35
+                     sohn | 9, 12, 31
+                   sollen | 25
+                       sp | 4
+                    spiel | 15
+                   spiele | 15
+                   stammt | 2
+                    stern | 30
+                   strand | 16
+                        t | 4, 25, 26, 30
+                   tanzen | 27
+                      tot | 42
+                    ttern | 22
+                      und | 4, 11, 19, 27, 29, 35, 41
+                    uselt | 22
+                    vater | 5, 10, 19, 29, 36, 39
+               verspricht | 20
+                      von | 2
+                      war | 42
+                     warm | 7
+                   warten | 25
+                      was | 9, 20
+                   weiden | 32
+                      wer | 4
+                   wiegen | 27
+                   willig | 35
+                   willst | 24
+                     wind | 4, 22
+                     wohl | 6
+                 wolfgang | 2

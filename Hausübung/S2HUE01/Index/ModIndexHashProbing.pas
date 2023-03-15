@@ -1,3 +1,7 @@
+(* ModIndexHashProbing:                                      MFL, 2023-03-10 *)
+(* ------                                                                    *)
+(* Hashtabel with Probing, Singly linked list                                *)
+(* ========================================================================= *)
 UNIT ModIndexHashProbing;
 
 INTERFACE
@@ -18,17 +22,17 @@ TYPE
     next: IndexNodePtr;
   END;(* Node *)
 
-  (* type for word *)
-  IdxType = RECORD
+  (* type for hashtable *)
+  HtType = RECORD
     w: STRING;
     indices: IndexNodePtr;
   END; (* HtType *)
-  HashTable = ARRAY[0..M-1] OF IdxType;
+  HashTable = ARRAY[0..M-1] OF HtType;
   
   (* type for sorted List*)
   ListNodePtr = ^ListNode;
   ListNode = RECORD
-    idx: IdxType;
+    idx: HtType;
     next: ListNodePtr;
   END; (* ListNode *)
 
@@ -46,7 +50,7 @@ VAR
     sortedIndex := NewIndex;
   END; (* InitIndex *)
 
-  PROCEDURE InsertNode(idx: IdxType);
+  PROCEDURE InsertNode(idx: HtType);
   VAR 
     n: ListNodePtr;
     pred, succ: ListNodePtr;
@@ -86,6 +90,7 @@ VAR
   
   PROCEDURE DisposeIndex;
     VAR 
+      i: INTEGER;
       n: ListNodePtr;
   BEGIN (* DisposeIndex *)
     WHILE (sortedIndex <> NIL) DO BEGIN
@@ -94,7 +99,10 @@ VAR
       Dispose(sortedIndex);
       sortedIndex := n;
     END; (* WHILE *)
-    InitIndex;
+    FOR i := 0 TO M-1 DO BEGIN (* to avoid error if user tries to create a sorted index after all was disposed *)
+      ht[i].w := '';
+      ht[i].indices := NIL;
+    END; (* FOR *)
   END; (* DisposeIndex *)
 
   PROCEDURE Insert(str: STRING; idx: INTEGER);
@@ -104,7 +112,7 @@ VAR
     succ, n: IndexNodePtr;
   BEGIN (* Insert *)
     succ := NIL;
-    h := Hash1(str) MOD M;
+    h := Hash2(str) MOD M;
     step := Hash2(str) MOD M;
     IF STEP = 0 THEN STEP := 1;
     tries := 0;
@@ -118,13 +126,13 @@ VAR
       END; (* IF *)
     END; (* WHILE *)
     (* insert only if not found*)
-    IF (ht[h].w = '') THEN BEGIN
+    IF (ht[h].w = '') THEN BEGIN (* add word and first index *)
       New(n);
       n^.idx := idx;
       n^.next := NIL;
       ht[h].indices := n;
       ht[h].w := str;
-    END ELSE BEGIN
+    END ELSE BEGIN (* only add index *)
       New(n);
       n^.idx := idx;
       n^.next := NIL;
@@ -132,7 +140,11 @@ VAR
       WHILE (succ^.next <> NIL) DO BEGIN
         succ := succ^.next;
       END; (* WHILE *)
-      succ^.next := n;
+      IF (succ^.idx = n^.idx) THEN BEGIN
+        Dispose(n);
+      END ELSE BEGIN
+        succ^.next := n;   
+      END; (* IF *)
     END; (* IF *)
   END; (* Insert *)
 

@@ -1,0 +1,11 @@
+IndexGen: index generation for text file Rump.txt
+
+                      ach | 1
+                     dass | 1, 2
+                      gut | 1
+                    heiss | 2
+                      ich | 2
+                  niemand | 1
+          rumpelstilzchen | 2
+                    weiss | 1
+                      wie | 1
