@@ -66,30 +66,123 @@ BEGIN (* BruteForce2 *)
   END; (* IF *)
 END; (* BruteForce2 *)
 
-FUNCTION BruteForceRl(s, p: STRING): INTEGER;
+(* s is full string, p is patterm*) (* rechts nach links *)
+FUNCTION BruteForceRL(s, p: STRING): INTEGER;
   VAR
     i, j: INTEGER;
-    sLen, plen: INTEGER;
-BEGIN (* BruteForceRl *)
+    sLen, pLen: INTEGER;
+BEGIN (* BruteForceRL *)
   sLen := Length(s);
   pLen := Length(p);
-  i := plen; j := plen;
+  i := pLen;
+  j := pLen;
   WHILE (i <= sLen) AND (j > 0) DO BEGIN
     IF (Eq(s[i], p[j])) THEN BEGIN
-      Dec(i);
-      Dec(j);
+      i := i - 1;
+      j := j - 1;
     END ELSE BEGIN
-      (* missmach *)
+      (* mismatch*)
       i := i + plen - j + 1;
-      j := pLen;
-    END;
+      j := plen;
+    END; (* IF *)
   END; (* WHILE *)
   IF (j = 0) THEN BEGIN
-    BruteForceRl := i + 1;
+    BruteForceRL :=  i + 1;
   END ELSE BEGIN
-    BruteForceRl := 0;
+    BruteForceRL := 0;
   END; (* IF *)
-END; (* BruteForceRl *)
+END; (* BruteForceRL *)
+
+FUNCTION RabinKarp(s, p: STRING): INTEGER;
+CONST
+  Base = 256;
+  M = 32099; (* primennumber < 2^15 *)
+
+VAR
+  i, j, pos: INTEGER;
+  hp, hs: INTEGER;
+  pLen, sLen: INTEGER;
+  bP: INTEGER; (* (base ^ (plen - 1)) MOD M*)
+BEGIN (* RabinKarp *)
+  plen := Length(p);
+  sLen := Length(s);
+  hp := 0;
+  hs := 0;
+  FOR i := 1 TO pLen DO BEGIN
+    hs := (hs * Base + Ord(s[i])) MOD M;
+    hp := (hp * Base + Ord(p[i])) MOD M;
+  END; (* FOR *)
+  bP := 1;
+  FOR i := 1 TO plen - 1 DO BEGIN
+    bp := bp * Base MOD M;
+  END; (* FOR *)
+  i := 1;
+  pos := 0;
+  WHILE (i <= sLen - plen + 1) AND (pos = 0) DO BEGIN
+    IF (hp = hs) THEN BEGIN
+      j := 1;
+      WHILE (j <= plen) AND Eq(s[i + j - 1], p[j]) DO BEGIN
+        Inc(j);
+      END; (* WHILE *)
+      IF (j > plen) THEN BEGIN
+        pos := i;
+      END; (* IF *)
+    END; (* IF *)
+    IF (i < sLen - plen + 1) AND (pos = 0) THEN BEGIN
+      hs := (hs + M * bp - Ord(s[i]) * bP) MOD M;
+      hs := (hs * Base) MOD M;
+      hs := (hs + Ord(s[i + plen])) MOD M;
+    END; (* IF *)
+    Inc(i);
+  END; (* WHILE *)
+  RabinKarp := pos;
+END; (* RabinKarp *)
+
+FUNCTION BoyerMoore(s, p: STRING): INTEGER;
+  VAR
+    i, j: INTEGER;
+    sLen, pLen: INTEGER;
+    skip: ARRAY [CHAR] OF INTEGER;
+    PROCEDURE InitSkip;
+      VAR
+        ch: CHAR;
+        k: INTEGER;
+    BEGIN (* InitSkip *)
+      FOR ch := Low(CHAR) TO High(CHAR) DO BEGIN
+        skip[ch] := plen;
+      END; (* FOR *)
+      FOR k := 1 TO plen DO BEGIN
+        skip[p[k]] := plen - k;
+      END; (* FOR *)
+    END; (* InitSkip *)
+
+BEGIN (* BoyerMoore *)
+  sLen := Length(s);
+  pLen := Length(p);
+  InitSkip;
+  i := pLen;
+  j := pLen;
+  WHILE (i <= sLen) AND (j > 0) DO BEGIN
+    IF (Eq(s[i], p[j])) THEN BEGIN
+      i := i - 1;
+      j := j - 1;
+    END ELSE BEGIN
+      (* mismatch*)
+      IF (plen - j> skip[s[i]]) THEN BEGIN
+        i := plen + i;
+      END ELSE BEGIN
+        i := i + skip[s[i]];
+      END; (* IF *)
+      j := plen;
+    END; (* IF *)
+  END; (* WHILE *)
+
+  IF (j = 0) THEN BEGIN
+    BoyerMoore :=  i + 1;
+  END ELSE BEGIN
+    BoyerMoore := 0;
+  END; (* IF *)
+END; (*BoyerMoore*)
 
 FUNCTION KnuthMorrisPratt1(s, p: STRING): INTEGER;
   VAR
@@ -222,6 +315,10 @@ BEGIN (* PatternMatching *)
   Test(KnuthMorrisPratt1);
   WriteLn('KnuthMorrisPratt2');
   Test(KnuthMorrisPratt2);
-    WriteLn('BruteForceRL');
+  WriteLn('BruteForceRL');
   Test(BruteForceRL);
+  WriteLn('BoyerMoore');
+  Test(BoyerMoore);
+  WriteLn('RabinKarp');
+  Test(RabinKarp);
 END. (* PatternMatching *)
