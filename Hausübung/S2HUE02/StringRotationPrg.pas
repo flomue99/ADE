@@ -1,10 +1,11 @@
-(* Title:                                                 Author, 2023-03-20 *)
+(* StringRotationPrg:                                        MFL, 2023-03-20 *)
 (* ------                                                                    *)
-(* Description                                                               *)
+(* Program to check if to words are a cyclic rotation                        *)
 (* ========================================================================= *)
 PROGRAM StringRotationPrg;
 
-FUNCTION BruteForce2(s, p: STRING): INTEGER;
+(* modified Bruteforce 2, able to search pattern over corners *)
+FUNCTION BruteForce2(s, p: STRING): INTEGER; 
   VAR
     i, j: INTEGER;
     sLen, plen: INTEGER;
@@ -12,13 +13,13 @@ BEGIN (* BruteForce2 *)
   sLen := Length(s);
   pLen := Length(p);
   i := 1; j := 1;
-  WHILE (i + plen - j <= sLen) AND (j <= pLen ) DO BEGIN
-  Write(p[i]);
+  WHILE (j <= pLen) DO BEGIN
     IF (s[i] = p[j]) THEN BEGIN
       Inc(i);
       Inc(j);
-    //END ELSE IF (i = sLen) THEN BEGIN
-    //  i := 1;
+      IF (i > sLen) THEN BEGIN (* set i to 1 so we cant acces s outside of slen *)
+        i := 1;
+      END; (* IF *)
     END ELSE BEGIN
       (* missmatch*)
       i := i - j + 2;
@@ -26,39 +27,40 @@ BEGIN (* BruteForce2 *)
     END; (* IF *)
   END; (* WHILE *)
   IF (j > plen) THEN BEGIN
-    BruteForce2 := i - j + 1;
+    BruteForce2 := i + slen - j + 1; (* plus slen to get the right startpoint *)
   END ELSE BEGIN
     BruteForce2 := 0;
   END; (* IF *)
 END; (* BruteForce2 *)
 
 FUNCTION IsCyclicRotation(a, b: STRING): BOOLEAN;
-  VAR
-    i, j, k, actualVal: INTEGER;
-    s: STRING;    
+VAR
+  foundAt: INTEGER;  
 BEGIN (* IsCyclicRotation *)
-  IF (Length(a) <> Length(b)) THEN BEGIN (* strings not the same sice *)
+  IF (Length(a) <> Length(b)) THEN BEGIN (* strings not the same sice => cant be a rotation *)
     EXIT(FALSE);
   END; (* IF *)
-  s := '';
-  FOR i := 1 TO Length(a) DO BEGIN
-    s := a[i];
-    FOR j := i + 1 TO Length(a) DO BEGIN
-      s := s + a[j];
-    END; (* FOR *)
-    FOR k := 1 TO i -1 DO BEGIN
-     s := s + a[k];
-    END; (* FOR *)
-    actualVal := BruteForce2(s, b);
-    IF (actualVal <> 0) THEN BEGIN (* found? *)
-      EXIT(TRUE);
-    END; (* IF *)
-    s := '';
-  END; (* FOR *)
-  IsCyclicRotation := FALSE;
+  foundAt := BruteForce2(a, b);
+  IsCyclicRotation := foundAt <> 0;
 END; (* IsCyclicRotation *)
 
 BEGIN (* StringRotationPrg *)
-  WriteLn(BruteForce2('rgHagenbe', 'Hagenbe'));
-  //WriteLn(IsCyclicRotation('Hagenberg', 'rgHagenbe'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'Hagenberg'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'agenbergH'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'genbergHa'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'enbergHag'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'nbergHage'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'bergHagen'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'ergHagenb'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'rgHagenbe'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'gHagenber'));
+  WriteLn(IsCyclicRotation('Hagenberg', 'Hagenberg'));
+  WriteLn(IsCyclicRotation('agenbergH', 'Hagenberg'));
+  WriteLn(IsCyclicRotation('genbergHa', 'Hagenberg'));
+  WriteLn(IsCyclicRotation('enbergHag', 'Hagenberg'));
+  WriteLn(IsCyclicRotation('nbergHage', 'Hagenberg'));
+  WriteLn(IsCyclicRotation('bergHagen', 'Hagenberg'));
+  WriteLn(IsCyclicRotation('ergHagenb', 'Hagenberg'));
+  WriteLn(IsCyclicRotation('rgHagenbe', 'Hagenberg'));
+  WriteLn(IsCyclicRotation('gHagenber', 'Hagenberg'));
 END. (* StringRotationPrg *)
