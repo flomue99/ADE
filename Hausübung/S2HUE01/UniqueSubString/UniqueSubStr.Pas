@@ -33,4 +33,4 @@ BEGIN (* UniqueSubstr *)
   ReadInput;
   WriteLn('Die eingegebene Zeichenkette hat: ',CountEntries, ' eindeutige Teilketten');
   DisposeHashTable;
-END. (* UniqueSubstr *)
+END. (* UniqueSubstr *) 

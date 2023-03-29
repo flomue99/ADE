@@ -1,6 +1,6 @@
-(* Title:                                                 Author, 2023-03-17 *)
+(* LongestMatchPrg:                                          MFL, 2023-03-17 *)
 (* ------                                                                    *)
-(* Description                                                               *)
+(* find longest match                                                        *)
 (* ========================================================================= *)
 PROGRAM LongestMatchPrg;
 
@@ -8,7 +8,6 @@ TYPE
   NodePtr = ^Node;
   Node = RECORD
     subStr: STRING;
-    idx: INTEGER;
     next: NodePtr;
   END; (* Node *)
   ListPtr = NodePtr;
@@ -16,28 +15,33 @@ TYPE
 VAR
   numComp: INTEGER;
 
+FUNCTION Eq(a, b: CHAR): BOOLEAN;
+BEGIN (* Eq *)
+  Inc(numComp);
+  Eq := a = b;
+END; (* Eq *)
+
 FUNCTION NewList: ListPtr;
 BEGIN (* NewList *)
   NewList := NiL;
 END; (* NewList *)
 
-FUNCTION NewNode(str: STRING; idx: INTEGER): NodePtr;
+FUNCTION NewNode(str: STRING): NodePtr;
   VAR
     n: NodePtr;
 BEGIN (* NewNode *)
   New(n);
   n^.subStr := str;   
   n^.next := NiL;
-  n^.idx := idx;
   NewNode := n;
 END; (* NewNode *)
 
-PROCEDURE Insert(VAR l: ListPtr; str: STRING; idx: INTEGER);
+PROCEDURE Insert(VAR l: ListPtr; str: STRING);
   VAR
     n: NodePtr;
     pred, succ: NodePtr;
 BEGIN (* Insert *)
-  n := NewNode(str, idx);
+  n := NewNode(str);
   IF (l = NIL) THEN BEGIN
     l := n;
   END ELSE BEGIN
@@ -56,18 +60,6 @@ BEGIN (* Insert *)
   END; (* IF *)
 END; (* Insert *)
 
-PROCEDURE WriteList(l: ListPtr);
-  VAR
-    n: NodePtr;
-BEGIN (* WriteList *)
-  n := l;
-  WHILE (n <> NIL) DO BEGIN
-    Write(n^.subStr, '-> ');
-    n := n^.next; (*set next node*)
-  END; (* WHILE *)
-  WriteLn('|');
-END; (* WriteList *)
-
 PROCEDURE DisposeList(VAR l: ListPtr);
   VAR
     n: NodePtr;
@@ -78,12 +70,6 @@ BEGIN (* DisposeList *)
     l := n; (*neuer Kopf ist n*)
   END; (* WHILE *)
 END; (* DisposeList *)
-
-FUNCTION Eq(a, b: CHAR): BOOLEAN;
-BEGIN (* Eq *)
-  Inc(numComp);
-  Eq := a = b;
-END; (* Eq *)
 
 FUNCTION KnuthMorrisPratt2(s, p: STRING): INTEGER;
   VAR
@@ -101,7 +87,7 @@ FUNCTION KnuthMorrisPratt2(s, p: STRING): INTEGER;
         Inc(i);
         Inc(j);
         (* next[i] := j; *)
-        IF (NOT Eq(p[j], p[i])) THEN BEGIN
+        IF (NOT EQ(p[j], p[i])) THEN BEGIN
           next[i] := j;
         END ELSE BEGIN
           next[i] := next[j];
@@ -142,22 +128,38 @@ BEGIN (* CreateSubStrings *)
   n := Length(str);
   FOR i := 1 TO n DO BEGIN
     s := str[i];
-    Insert(l,s, i);
+    Insert(l, s);
     FOR j := i + 1 TO n DO BEGIN
       s := s + str[j];
-      Insert(l,s,i);
+      Insert(l,s);
     END; (* FOR *)
     s := '';
   END; (* FOR *)
 END; (* CreateSubStrings *)
 
+ PROCEDURE WriteList(l: ListPtr);
+    VAR
+      n: NodePtr;
+  BEGIN (* WriteList *)
+    n := l;
+    WHILE (n <> NIL) DO BEGIN
+      Write(n^.subStr, ', ');
+      n := n^.next; (*set next node*)
+    END; (* WHILE *)
+    WriteLn('|');
+  END; (* WriteList *)
+
 PROCEDURE FindLongestMatch(s1, s2: STRING; VAR sub: STRING; VAR start1, start2: INTEGER);
   VAR
     p, s: STRING;
-    actualVal, pIdx: INTEGER;
+    actualVal: INTEGER;
     n : NodePtr;
     subStringList: ListPtr;
 BEGIN (* FindLongestMatch *)
+  IF ((s1 = '') OR (s2 = ''))  THEN BEGIN
+    WriteLn('ERROR: At least one of the two strings is empty!');
+    EXIT;
+  END; (* IF *)
   subStringList := NewList; 
   actualVal := 0;
   IF (Length(s1) > Length(s2)) THEN BEGIN
@@ -167,11 +169,10 @@ BEGIN (* FindLongestMatch *)
     p := s1;
     s := s2;
   END; (* IF *) 
-  CreateSubStrings(subStringList, p); (* VAR substringList *)
+  CreateSubStrings(subStringList, p);
   n := subStringList;
   WHILE ((actualVal = 0) AND (n <> NIL)) DO BEGIN
     p := n^.subStr;
-    pIdx := n^.idx;
     actualVal := KnuthMorrisPratt2(s, p);
     n := n^.next;
   END;
@@ -181,31 +182,27 @@ BEGIN (* FindLongestMatch *)
     sub := p;
     IF (Length(s1) > Length(s2)) THEN BEGIN
       start1 := actualVal;
-      start2 := pIdx;
+      start2 := KnuthMorrisPratt2(s2 ,p);
     END ELSE BEGIN
       start2 := actualVal;
-      start1 := pIdx;
+      start1 := KnuthMorrisPratt2(s1 ,p);
     END; (* IF *)  
-  END ELSE BEGIN
+  END ELSE BEGIN (* no pattern match *)
    start1 := 0;
    start2 := 0;
    sub := '';
   END; (* IF *)
 END; (* FindLongestMatch *)
 
-
 VAR
   sub, s1, s2: STRING;
   start1, start2: INTEGER;
 BEGIN (* LongestMatchPrg *)
-  sub := '';
-  //s1 := 'abcdefg';
-  //s2 := 'adeb';
-  s1 := 'uvwxy';
-  s2 := 'rstqvwxz';
+  s2 := 'abc';
+  s1 := 'abc';
+  WriteLn('s1: ', s1);
+  WriteLn('s2: ', s2);
   FindLongestMatch(s1, s2, sub, start1, start2);
-  WriteLn('sub: ',sub);
-  WriteLn('start1: ', start1);
-  WriteLn('start2: ', start2);
-  WriteLn('comp: ', numComp);
+  WriteLn('sub: ', sub, ' start1: ', start1, ' start2: ', start2);
+  WriteLn(numComp);
 END. (* LongestMatchPrg *)
