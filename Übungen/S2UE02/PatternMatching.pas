@@ -1,4 +1,4 @@
-(* ´PatternMatching:                                         MFL, 2023-03-15 *)
+(* �PatternMatching:                                         MFL, 2023-03-15 *)
 (* ------                                                                    *)
 (* Description                                                               *)
 (* ========================================================================= *)
@@ -91,7 +91,7 @@ BEGIN (* BruteForceRL *)
   END ELSE BEGIN
     BruteForceRL := 0;
   END; (* IF *)
-END; (* BruteForceRL *)
+END; (*�BruteForceRL�*)
 
 FUNCTION RabinKarp(s, p: STRING): INTEGER;
 CONST
@@ -285,6 +285,132 @@ BEGIN (* KnuthMorrisPratt2 *)
   END; (* IF *)
 END; (* KnuthMorrisPratt2 *)
 
+FUNCTION BruteForce(s, p : STRING): INTEGER;
+  VAR
+    sLen, pLen, i, j: INTEGER;
+BEGIN (* BruteForce *)
+  sLen := Length(s);
+  pLen := Length(p);
+  i := 1;
+  j := 1;
+  REPEAT
+    IF (s[i] = p[j]) THEN BEGIN
+      Inc(i);
+      Inc(j);
+    END ELSE BEGIN
+      i := i - j + 2;
+      j := 1;
+    END; (* IF *)
+  UNTIL (i > sLen) OR (j > pLen); (* REPEAT *)
+  IF j > pLen THEN
+    BruteForce := i - pLen
+  ELSE
+    BruteForce := 0;
+END; (* BruteForce *)
+
+FUNCTION Serach(s, p : STRING): INTEGER;
+  VAR
+    sLen, pLen, i, j, x, z:INTEGER;
+    offset : INTEGER;
+BEGIN (* Serach *)
+   sLen := Length(s);
+  pLen := Length(p);
+  offset := 0;
+  i := 1;
+  j := 1;
+  REPEAT
+    IF (s[i] = p[j])THEN BEGIN
+      z := j;
+      x := i;
+      WHILE (s[i] = p[z]) DO BEGIN
+        Inc(z);
+        Dec(offset);
+      END; (* WHILE *)
+      WHILE (s[x] = p[j]) DO BEGIN
+        Inc(x);
+        Inc(offset);
+      END; (* WHILE *)
+      i := z;
+      j := x;
+    END ELSE BEGIN
+      i := i - j + 2;
+      j := 1;
+    END; (* IF *)
+  UNTIL (i > sLen) OR (j > pLen); (* REPEAT *)
+  IF j > pLen THEN
+    Serach := i - pLen
+  ELSE
+    Serach := 0;
+END; (* Search *)
+
+
+FUNCTION WeakSerach(s, p : STRING): INTEGER;
+  VAR
+    sLen, pLen, i, j, offset: INTEGER;
+BEGIN (* WeakSerach *)
+  sLen := Length(s);
+  pLen := Length(p);
+  offset := 0;
+  i := 1;
+  j := 1;
+  REPEAT
+    IF ((s[i] = '�') AND ((p[j] = 's') AND (p[j+1] = 's')))THEN BEGIN
+      Inc(i);
+      j := j + 2;
+      Inc(offset);
+    END ELSE IF ((p[j] = '�') AND ((s[i] = 's') AND (s[i+1] = 's'))) OR ((p[j] = 's') AND (p[j + 1] <> 's' ) AND ((s[i] = 's') AND (s[i+1] = 's'))) THEN BEGIN
+      Inc(j);
+      i := i + 2;
+      Dec(offset);
+    END ELSE IF ((s[i] = '�') AND (p[j] = 's')) OR ((s[i] = 's') AND (p[j] = '�')) THEN BEGIN
+      Inc(i);
+      Inc(j);
+    END ELSE IF (s[i] = p[j])THEN BEGIN
+      Inc(i);
+      Inc(j);
+    END ELSE BEGIN
+      i := i - j + 2;
+      j := 1;
+    END; (* IF *)
+  UNTIL (i > sLen) OR (j > pLen); (* REPEAT *)
+  IF j > pLen THEN
+    WeakSerach := i - pLen + offset
+  ELSE
+    WeakSerach := 0;
+END; (* WeakSerach *)
+
+
+FUNCTION BruteForce5(s, p : STRING): INTEGER;
+  VAR
+    sLen, pLen, i, j: INTEGER;
+    missCount: INTEGER;
+BEGIN (* BruteForce *)
+  missCount := 0;
+  sLen := Length(s);
+  pLen := Length(p);
+  i := 1;
+  j := 1;
+  REPEAT
+    IF (s[i] = p[j]) THEN BEGIN
+      Inc(i);
+      Inc(j);
+    END ELSE IF((s[i] <> p[j]) AND (j > 1) AND(missCount = 0)) THEN BEGIN
+      Inc(i);
+      Inc(j);
+      Inc(missCount);
+    END ELSE BEGIN
+      missCount := 0;
+      i := i - j + 2;
+      j := 1;
+    END; (* IF *)
+  UNTIL (i > sLen) OR (j > pLen); (* REPEAT *)
+  IF j > pLen THEN
+    BruteForce5 := i - pLen
+  ELSE
+    BruteForce5 := 0;
+END; (* BruteForce *)
+
+
 PROCEDURE TestCase(pos: PMProc; s, p: STRING; expectedVal: INTEGER);
   VAR
     actualVal: INTEGER;
@@ -309,16 +435,27 @@ BEGIN (* Test *)
 END; (* Test *)
 
 BEGIN (* PatternMatching *)
-  WriteLn('BruteForce2');
-  Test(BruteForce2);
-  WriteLn('KnuthMorrisPratt1');
-  Test(KnuthMorrisPratt1);
-  WriteLn('KnuthMorrisPratt2');
-  Test(KnuthMorrisPratt2);
-  WriteLn('BruteForceRL');
-  Test(BruteForceRL);
-  WriteLn('BoyerMoore');
-  Test(BoyerMoore);
-  WriteLn('RabinKarp');
-  Test(RabinKarp);
+  //WriteLn('BruteForce2');
+  //Test(BruteForce2);
+  //WriteLn('KnuthMorrisPratt1');
+  //Test(KnuthMorrisPratt1);
+  //WriteLn('KnuthMorrisPratt2');
+  //Test(KnuthMorrisPratt2);
+  //WriteLn('BruteForceRL');
+  //Test(BruteForceRL);
+  //WriteLn('BoyerMoore');
+  //Test(BoyerMoore);
+  //WriteLn('RabinKarp');
+  //Test(RabinKarp);
+  //WriteLn(WeakSerach('Stra�e', 'as'));
+  //WriteLn(WeakSerach('Stra�e', 'a�'));
+  //WriteLn(WeakSerach('Stra�e', 'ass'));
+  //WriteLn(WeakSerach('Strasse', 'as'));
+  //WriteLn(WeakSerach('Strasse', 'a�'));
+  //WriteLn(WeakSerach('Strasse', 'ass'));
+  WriteLn(BruteForce5('Florian', 'oriaz'));
+  WriteLn(BruteForce5('Florian', 'AACD'));
+  WriteLn(BruteForce5('Florian', 'CCC'));
+  WriteLn(BruteForce5('Florian', 'ACD'));
+
 END. (* PatternMatching *)
