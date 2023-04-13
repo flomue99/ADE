@@ -1,4 +1,4 @@
-(* ï¿½PatternMatching:                                         MFL, 2023-03-15 *)
+(* ?PatternMatching:                                         MFL, 2023-03-15 *)
 (* ------                                                                    *)
 (* Description                                                               *)
 (* ========================================================================= *)
@@ -91,7 +91,7 @@ BEGIN (* BruteForceRL *)
   END ELSE BEGIN
     BruteForceRL := 0;
   END; (* IF *)
-END; (*ï¿½BruteForceRLï¿½*)
+END; (*?BruteForceRL?*)
 
 FUNCTION RabinKarp(s, p: STRING): INTEGER;
 CONST
@@ -343,8 +343,41 @@ BEGIN (* Serach *)
     Serach := 0;
 END; (* Search *)
 
+FUNCTION WeakSerach2(s, p : STRING): INTEGER; (* s ss ? *)
+  VAR
+    sLen, pLen, i, j, offset: INTEGER;
+BEGIN (* WeakSerach2 *)
+  sLen := Length(s);
+  pLen := Length(p);
+  offset := 0;
+  i := 1;
+  j := 1;
+  REPEAT
+    IF (s[i] = p[j])THEN BEGIN
+      WHILE  (i <=sLen) AND (s[i] = s[i+1]) DO BEGIN
+        inc(i);
+        Dec(offset);
+      END; (* WHILE *)
+      WHILE (j <= plen) AND (p[j] = p[j+1]) DO BEGIN
+        Inc(j);
+        Inc(offset);
+      END; (* WHILE *)
+      Inc(i);
+      Inc(j);
+    END ELSE BEGIN
+      i := i - j + 2 ;
+      offset := 0;
+      j := 1;
+    END; (* IF *)
+  UNTIL (i > sLen) OR (j > pLen); (* REPEAT *)
+  //WriteLn(offset);
+  IF j > pLen THEN
+    WeakSerach2 := i - pLen + offset
+  ELSE
+    WeakSerach2 := 0;
+END; (* WeakSerach2 *)
 
-FUNCTION WeakSerach(s, p : STRING): INTEGER;
+FUNCTION WeakSerach(s, p : STRING): INTEGER; (* s ss ? *)
   VAR
     sLen, pLen, i, j, offset: INTEGER;
 BEGIN (* WeakSerach *)
@@ -354,18 +387,15 @@ BEGIN (* WeakSerach *)
   i := 1;
   j := 1;
   REPEAT
-    IF ((s[i] = 'ï¿½') AND ((p[j] = 's') AND (p[j+1] = 's')))THEN BEGIN
-      Inc(i);
-      j := j + 2;
-      Inc(offset);
-    END ELSE IF ((p[j] = 'ï¿½') AND ((s[i] = 's') AND (s[i+1] = 's'))) OR ((p[j] = 's') AND (p[j + 1] <> 's' ) AND ((s[i] = 's') AND (s[i+1] = 's'))) THEN BEGIN
-      Inc(j);
-      i := i + 2;
-      Dec(offset);
-    END ELSE IF ((s[i] = 'ï¿½') AND (p[j] = 's')) OR ((s[i] = 's') AND (p[j] = 'ï¿½')) THEN BEGIN
-      Inc(i);
-      Inc(j);
-    END ELSE IF (s[i] = p[j])THEN BEGIN
+     IF (p[j] = 'ß') AND ((s[i] = 's') AND (s[i+1] = 's'))  THEN BEGIN (* s = ss, p = ß *)
+        Inc(j);
+        Inc(offset);
+        i := i + 2;
+    END ELSE IF ((s[i] = 'ß')) AND ((p[j] = 's') AND (p[j+1] = 's'))  THEN BEGIN (* s = ß, p = ss *)
+        Inc(i);
+        Dec(offset);
+        j := j + 2;
+    END ELSE IF (s[i] = p[j]) OR (p[j] = 's') AND (s[i] = 'ß') OR (s[i] = 's') AND (p[j] = 'ß') THEN BEGIN (*s = s, p = s oder s = s, p = ß oder s = ß, p = s *)
       Inc(i);
       Inc(j);
     END ELSE BEGIN
@@ -373,12 +403,44 @@ BEGIN (* WeakSerach *)
       j := 1;
     END; (* IF *)
   UNTIL (i > sLen) OR (j > pLen); (* REPEAT *)
+  //WriteLn(offset);
   IF j > pLen THEN
-    WeakSerach := i - pLen + offset
+    WeakSerach := i - pLen - offset
   ELSE
     WeakSerach := 0;
 END; (* WeakSerach *)
 
+FUNCTION WeakSerach1(s, p : STRING): INTEGER; (* o und o? *)
+  VAR
+    sLen, pLen, i, j, offset: INTEGER;
+BEGIN (* WeakSerach1 *)
+  sLen := Length(s);
+  pLen := Length(p);
+  offset := 0;
+  i := 1;
+  j := 1;
+  REPEAT
+    IF (s[i] = p[j]) THEN BEGIN
+      Inc(i);
+      Inc(j);
+    END ELSE IF (s[i] = 'ö') AND (p[j]= 'o') AND (p[j+1] = 'e')THEN BEGIN (* s = ö, p = oe *)
+        Inc(i);
+        Dec(offset);
+        j := j + 2;
+    END ELSE IF (p[j] = 'ö') AND (s[i] = 'o') AND (s[i+1] = 'e') THEN BEGIN (* s = oe, p = ö *)
+        Inc(j);
+        Inc(offset);
+        i := i + 2;
+    END ELSE BEGIN
+      i := i - j + 2;
+      j := 1;
+    END; (* IF *)
+  UNTIL (i > sLen) OR (j > pLen); (* REPEAT *)
+  IF j > pLen THEN
+    WeakSerach1 := i - pLen - offset
+  ELSE
+    WeakSerach1 := 0;
+END; (* WeakSerach *)
 
 FUNCTION BruteForce5(s, p : STRING): INTEGER;
   VAR
@@ -394,7 +456,7 @@ BEGIN (* BruteForce *)
     IF (s[i] = p[j]) THEN BEGIN
       Inc(i);
       Inc(j);
-    END ELSE IF((s[i] <> p[j]) AND (j > 1) AND(missCount = 0)) THEN BEGIN
+    END ELSE IF( (j > 1) AND(missCount = 0)) THEN BEGIN
       Inc(i);
       Inc(j);
       Inc(missCount);
@@ -447,15 +509,22 @@ BEGIN (* PatternMatching *)
   //Test(BoyerMoore);
   //WriteLn('RabinKarp');
   //Test(RabinKarp);
-  //WriteLn(WeakSerach('Straï¿½e', 'as'));
-  //WriteLn(WeakSerach('Straï¿½e', 'aï¿½'));
-  //WriteLn(WeakSerach('Straï¿½e', 'ass'));
-  //WriteLn(WeakSerach('Strasse', 'as'));
-  //WriteLn(WeakSerach('Strasse', 'aï¿½'));
-  //WriteLn(WeakSerach('Strasse', 'ass'));
-  WriteLn(BruteForce5('Florian', 'oriaz'));
-  WriteLn(BruteForce5('Florian', 'AACD'));
-  WriteLn(BruteForce5('Florian', 'CCC'));
-  WriteLn(BruteForce5('Florian', 'ACD'));
-
+  WriteLn(WeakSerach('Straß', 'as'));
+  WriteLn(WeakSerach('Straß', 'aß'));
+  WriteLn(WeakSerach('Straß', 'ass'));
+  WriteLn(WeakSerach('Strass', 'as'));
+  WriteLn(WeakSerach('Strass', 'aß'));
+  WriteLn(WeakSerach('Strass', 'ass'));
+  WriteLn(WeakSerach1('Soehne', 'hneö'));
+  WriteLn(WeakSerach1('Soehne', 'Soehne'));
+  WriteLn(WeakSerach1('Söhne', 'Soehne'));
+  WriteLn(WeakSerach1('Söhne', 'Söhne'));
+  WriteLn(WeakSerach2('AACD', 'ACD'));
+  WriteLn(WeakSerach2('ACD', 'AACD'));
+  WriteLn(WeakSerach2('ACD', 'CCC'));
+  WriteLn(WeakSerach2('AADD', 'ACD'));
+  WriteLn(BruteForce5('AACD', 'ABD'));
+  WriteLn(BruteForce5('ACD', 'BCD'));
+  WriteLn(BruteForce5('ACD', 'ADD'));
+  WriteLn(BruteForce5('AADD', 'ABDD'));
 END. (* PatternMatching *)
