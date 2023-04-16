@@ -1,6 +1,6 @@
-(* Title:                                                 Author, 2023-04-13 *)
+(* ModVector:                                                MFL, 2023-04-13 *)
 (* ------                                                                    *)
-(* Description                                                               *)
+(* Vector as ADT                                                             *)
 (* ========================================================================= *)
 UNIT ModVector;
 
@@ -30,7 +30,6 @@ IMPLEMENTATION
     END; (* VectorRec *)
 
   PROCEDURE IncreaseCapacity(v: InternalVector); FORWARD;
-  PROCEDURE DecreaseCapacity(v: InternalVector); FORWARD;
 
   PROCEDURE InitVector(VAR v: Vector); (* init vector with size 10 *)
     VAR
@@ -73,7 +72,7 @@ IMPLEMENTATION
   BEGIN (* SetElementAt *)
     internalV := InternalVector(v);
     IF (pos <= 0) OR (pos > internalV^.numElem) THEN BEGIN
-      WriteLn('ERROR: Pos outside numElem range.');
+      WriteLn('ERROR: Pos outside numElem range, cant set element at pos ', pos ,'.');
     END ELSE BEGIN
        {$R-}
        internalV^.arrPtr^[pos] := val;
@@ -87,7 +86,7 @@ IMPLEMENTATION
   BEGIN (* ElementAt *)
     internalV := InternalVector(v);
     IF (pos <= 0) OR (pos > internalV^.numElem) THEN BEGIN
-      WriteLn('ERROR: Pos outside numElem range.');
+      WriteLn('ERROR: Pos outside numElem range, cant return element at pos ', pos,'.');
       ElementAt := 0;
     END ELSE BEGIN
       {$R-}
@@ -103,7 +102,7 @@ IMPLEMENTATION
   BEGIN (* RemoveElementAt *)
     internalV := InternalVector(v);
     IF (pos <= 0) OR (pos > internalV^.numElem) THEN BEGIN
-      WriteLn('ERROR: Pos outside numElem range.');
+      WriteLn('ERROR: Pos outside numElem range, cant remove element at pos ', pos,'.');
     END ELSE BEGIN
       FOR i := pos TO internalV^.numElem DO BEGIN
         {$R-}
@@ -145,12 +144,6 @@ IMPLEMENTATION
     v^.arrPtr := newPtr;
     v^.capacity := newCapacity;
   END; (* ChangeCapacity *)
-
-  PROCEDURE DecreaseCapacity(v: internalVector);
-  BEGIN (* DecreaseCapacity *)
-    WriteLn('Capacity decreased');
-    ChangeCapacity(v, v^.capacity DIV 2);
-  END; (* DecreaseCapacity *)
 
   PROCEDURE IncreaseCapacity(v: InternalVector);
   BEGIN (* IncreaseCapacity *)

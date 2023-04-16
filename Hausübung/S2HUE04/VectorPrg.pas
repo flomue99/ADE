@@ -13,6 +13,7 @@ BEGIN (* VectorPrg *)
   InitVector(v1);
   InitVector(v2);
   WriteLn(Capacity(v1));
+  WriteLn(Size(v1));
   FOR i := 1 TO 20 DO BEGIN
     Add(v1, i);
   END; (* FOR *)
@@ -31,6 +32,8 @@ BEGIN (* VectorPrg *)
   RemoveElementAt(v1, 3);
   RemoveElementAt(v1, 4);
   RemoveElementAt(v1, 20);
+  SetElementAt(v1, 21, 0);
+  WriteLn(ElementAt(v1, 21));
   WriteLn(Size(v1));
   FOR i := 1 TO 20 DO BEGIN
     Write(ElementAt(v1, i), ' ');
