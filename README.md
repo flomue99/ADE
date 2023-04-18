@@ -1,2 +1,4 @@
 # ADE_ADF
-Source code for the exercises and homework for lectures Alogrithmen und Datenstrukturen (ADE) and Fortgeschrittene Algorithmen und Datenstrukturen.
+Source code for the exercises and homework for following lecture.
+* Alogrithms and Data Structures (ADE).
+* Advanced Algorithms and Data Structures (ADF).
