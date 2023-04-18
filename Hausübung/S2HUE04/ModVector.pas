@@ -71,7 +71,9 @@ IMPLEMENTATION
       internalV: internalVector;
   BEGIN (* SetElementAt *)
     internalV := InternalVector(v);
-    IF (pos <= 0) OR (pos > internalV^.numElem) THEN BEGIN
+    IF (internalV = NIL) THEN BEGIN
+       WriteLn('ERROR: v = NIL, cant set element at pos ', pos,'.');
+    END ELSE IF(pos <= 0) OR (pos > internalV^.numElem) THEN BEGIN
       WriteLn('ERROR: Pos outside numElem range, cant set element at pos ', pos ,'.');
     END ELSE BEGIN
        {$R-}
@@ -85,7 +87,9 @@ IMPLEMENTATION
       internalV: internalVector;
   BEGIN (* ElementAt *)
     internalV := InternalVector(v);
-    IF (pos <= 0) OR (pos > internalV^.numElem) THEN BEGIN
+    IF (internalV = NIL) THEN BEGIN
+       WriteLn('ERROR: v = NIL, cant return element at pos ', pos,'.');
+    END ELSE IF (pos <= 0) OR (pos > internalV^.numElem) THEN BEGIN
       WriteLn('ERROR: Pos outside numElem range, cant return element at pos ', pos,'.');
       ElementAt := 0;
     END ELSE BEGIN
@@ -101,15 +105,17 @@ IMPLEMENTATION
       i: INTEGER;
   BEGIN (* RemoveElementAt *)
     internalV := InternalVector(v);
-    IF (pos <= 0) OR (pos > internalV^.numElem) THEN BEGIN
+    IF (internalV = NIL) THEN BEGIN
+       WriteLn('ERROR: v = NIL, cant remove element at pos ', pos,'.');
+    END ELSE IF (pos <= 0) OR (pos > internalV^.numElem) THEN BEGIN
       WriteLn('ERROR: Pos outside numElem range, cant remove element at pos ', pos,'.');
     END ELSE BEGIN
+      Dec(internalV^.numElem);
       FOR i := pos TO internalV^.numElem DO BEGIN
         {$R-}
-        internalV^.arrPtr^[i] := internalV^.arrPtr^[i];
+        internalV^.arrPtr^[i] := internalV^.arrPtr^[i+1];
         {$R+}
       END; (* FOR *)
-      Dec(internalV^.numElem);
     END; (* IF *)
   END; (* RemoveElementAt *)
 
@@ -118,7 +124,11 @@ IMPLEMENTATION
       internalV: internalVector;
   BEGIN (* Size *)
     internalV := InternalVector(v);
-    Size := internalV^.numElem;
+    IF (internalV = NIL) THEN BEGIN
+      Size := 0;
+    END ELSE BEGIN
+      Size := internalV^.numElem;
+    END; (* IF *)
   END; (* Size *)
 
   FUNCTION Capacity(v: Vector): INTEGER;
@@ -126,7 +136,11 @@ IMPLEMENTATION
       internalV: internalVector;
   BEGIN (* Capacity *)
     internalV := InternalVector(v);
-    Capacity := internalV^.capacity;
+    IF (internalV = NIL) THEN BEGIN
+      Capacity := 0;
+    END ELSE BEGIN
+      Capacity := internalV^.capacity;
+    END; (* IF *)
   END; (* Capacity *)
 
   PROCEDURE ChangeCapacity(v: internalVector; newCapacity: INTEGER);
@@ -147,7 +161,6 @@ IMPLEMENTATION
 
   PROCEDURE IncreaseCapacity(v: InternalVector);
   BEGIN (* IncreaseCapacity *)
-    WriteLn('Capacity increased!');
     ChangeCapacity(v, 2* v^.capacity);
   END; (* IncreaseCapacity *)
 

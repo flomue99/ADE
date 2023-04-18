@@ -1,6 +1,6 @@
-(* Title:                                                 Author, 2023-04-13 *)
+(* ModMultiset:                                              MFL, 2023-04-13 *)
 (* ------                                                                    *)
-(* Description                                                               *)
+(* Multiset as ADT                                                           *)
 (* ========================================================================= *)
 UNIT ModMultiset;
 
@@ -17,8 +17,6 @@ INTERFACE
   FUNCTION Count(ms: StrMSet; element: STRING): INTEGER;
   FUNCTION Cardinality(ms: StrMSet): INTEGER;
   FUNCTION CountUnique(ms: StrMSet): INTEGER;
-  
-  PROCEDURE WriteTree(ms: StrMSet);
 
 IMPLEMENTATION
 
@@ -81,7 +79,11 @@ IMPLEMENTATION
       CountUnique := 0;
     END; (* IF *)
     IF (internalMs <> NIL) THEN BEGIN
-      CountUnique := 1 + CountUnique(internalMs^.left) + CountUnique(internalMs^.right);
+      IF (internalMs^.elemCount = 0) THEN BEGIN
+        CountUnique := CountUnique(internalMs^.left) + CountUnique(internalMs^.right);
+      END ELSE BEGIN
+        CountUnique := 1 + CountUnique(internalMs^.left) + CountUnique(internalMs^.right);
+      END; (* IF *)
     END; (* IF *)
   END; (* CountUnique*)
 
@@ -108,7 +110,6 @@ IMPLEMENTATION
   BEGIN (* DisposeStrMSet *)
     internalMs := InternalMultiset(ms);
     IF(ms <> NIL) THEN BEGIN
-      WriteLn('dis');
       DisposeStrMSet(internalMs^.left);
       DisposeStrMSet(internalMs^.right);
       Dispose(internalMs);
@@ -136,75 +137,42 @@ IMPLEMENTATION
     END;
   END; (* Contains *)
   
-  PROCEDURE ChangeElemcount(VAR ms: InternalMultiset; element: STRING; i: INTEGER);
-  BEGIN (* ChangeElemcount *)
-    IF(ms = NIL) THEN BEGIN
-      WriteLn('String not in Multiset!, cant remove it');
-    END ELSE IF (element = ms^.elem) THEN BEGIN
-      IF (ms^.elemCount = 0) THEN BEGIN
-        WriteLn('String not in Multiset!, cant remove it');
-      END ELSE BEGIN
-        ms^.elemCount := ms^.elemCount + i;
-      END; (* IF *)
-    END ELSE IF(element < ms^.elem) THEN BEGIN
-        ChangeElemcount(ms^.left, element, i);
-    END ELSE BEGIN
-        ChangeElemcount(ms^.right, element, i);
-    END;
-  END; (* ChangeElemcount *)
- 
   PROCEDURE Insert(VAR ms: StrMSet; element: STRING);
     VAR 
-      n: MsNode;
       internalMs: InternalMultiset;
   BEGIN
     internalMs := InternalMultiset(ms);
-    n := NIL;
-    IF (Not Contains(internalMs, element)) THEN BEGIN
       IF(internalMs = NIL ) THEN BEGIN
-        n := NewNode(element); 
-        internalMs := n;
+        internalMs := NewNode(element); 
+      END ELSE IF( element = internalMs^.elem) THEN BEGIN
+        internalMs^.elemCount := internalMs^.elemCount + 1;
       END ELSE IF(element < internalMs^.elem) THEN BEGIN
         Insert(internalMs^.left, element);
       END ELSE BEGIN
         Insert(internalMs^.right, element);
       END;
       ms := internalMs;
-    END ELSE BEGIN
-      ChangeElemcount(internalMs, element, 1);
-      ms := internalMs;
-    END; (* IF *)
   END;
   PROCEDURE Remove(VAR ms: StrMSet; element: STRING);
     VAR
       internalMs: InternalMultiset;
   BEGIN (* Remove *)
     internalMs := InternalMultiset(ms);
-    ChangeElemcount(internalMs, element, -1);
+    IF(internalMs = NIL) THEN BEGIN
+      WriteLn('String not included in Multiset!, cant remove ', element,' !');
+    END ELSE IF (element = internalMs^.elem) THEN BEGIN
+      IF (internalMs^.elemCount = 0) THEN BEGIN
+        WriteLn('String not included in  Multiset!, cant remove ', element,' !');
+      END ELSE BEGIN
+        internalMs^.elemCount := internalMs^.elemCount - 1;
+      END; (* IF *)
+    END ELSE IF(element < internalMs^.elem) THEN BEGIN
+        Remove(internalMs^.left, element);
+    END ELSE BEGIN
+        Remove(internalMs^.right, element);
+    END;
+    ms := internalMs;
   END; (* Remove *)
- 
-
-  PROCEDURE WriteTreeGraphically(ms: InternalMultiset);
-    PROCEDURE WTGRec(ms: InternalMultiset; l: INTEGER);
-    BEGIN (* WTGRec *)
-      IF(ms <> NIL) THEN BEGIN
-        WTGRec(ms^.right,  l + 1); 
-        WriteLn('  ':l * 6, '( ', ms^.elem,'|',ms^.elemCount ,' ) <');
-        WTGRec(ms^.left, l + 1);
-      END;
-    END; (* WTGRec *)
-  BEGIN (* WriteTreeGraphically *)
-    WTGRec(ms, 0);
-  END; (* WriteTreeGraphically *)
-  
-  PROCEDURE WriteTree(ms: StrMSet);
-    VAR
-      internalMs: InternalMultiset;
-  BEGIN (* WriteTree *)
-    internalMs := InternalMultiset(ms);
-    WriteTreeGraphically(internalMs);
-  END; (* WriteTree *)
 
 BEGIN (* ModMultiset *)
-  
 END. (* ModMultiset *)
