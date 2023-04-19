@@ -354,16 +354,16 @@ BEGIN (* WeakSerach2 *)
   j := 1;
   REPEAT
     IF (s[i] = p[j])THEN BEGIN
-      WHILE  (i <=sLen) AND (s[i] = s[i+1]) DO BEGIN
+      Inc(i);
+      Inc(j);
+      WHILE  (i <=sLen) AND (s[i] = s[i-1]) DO BEGIN
         inc(i);
         Dec(offset);
       END; (* WHILE *)
-      WHILE (j <= plen) AND (p[j] = p[j+1]) DO BEGIN
+      WHILE (j <= plen) AND (p[j] = p[j-1]) DO BEGIN
         Inc(j);
         Inc(offset);
       END; (* WHILE *)
-      Inc(i);
-      Inc(j);
     END ELSE BEGIN
       i := i - j + 2 ;
       offset := 0;
@@ -387,15 +387,15 @@ BEGIN (* WeakSerach *)
   i := 1;
   j := 1;
   REPEAT
-     IF (p[j] = 'ß') AND ((s[i] = 's') AND (s[i+1] = 's'))  THEN BEGIN (* s = ss, p = ß *)
+     IF (p[j] = 'ï¿½') AND ((s[i] = 's') AND (s[i+1] = 's'))  THEN BEGIN (* s = ss, p = ï¿½ *)
         Inc(j);
         Inc(offset);
         i := i + 2;
-    END ELSE IF ((s[i] = 'ß')) AND ((p[j] = 's') AND (p[j+1] = 's'))  THEN BEGIN (* s = ß, p = ss *)
+    END ELSE IF ((s[i] = 'ï¿½')) AND ((p[j] = 's') AND (p[j+1] = 's'))  THEN BEGIN (* s = ï¿½, p = ss *)
         Inc(i);
         Dec(offset);
         j := j + 2;
-    END ELSE IF (s[i] = p[j]) OR (p[j] = 's') AND (s[i] = 'ß') OR (s[i] = 's') AND (p[j] = 'ß') THEN BEGIN (*s = s, p = s oder s = s, p = ß oder s = ß, p = s *)
+    END ELSE IF (s[i] = p[j]) OR (p[j] = 's') AND (s[i] = 'ï¿½') OR (s[i] = 's') AND (p[j] = 'ï¿½') THEN BEGIN (*s = s, p = s oder s = s, p = ï¿½ oder s = ï¿½, p = s *)
       Inc(i);
       Inc(j);
     END ELSE BEGIN
@@ -423,11 +423,11 @@ BEGIN (* WeakSerach1 *)
     IF (s[i] = p[j]) THEN BEGIN
       Inc(i);
       Inc(j);
-    END ELSE IF (s[i] = 'ö') AND (p[j]= 'o') AND (p[j+1] = 'e')THEN BEGIN (* s = ö, p = oe *)
+    END ELSE IF (s[i] = 'ï¿½') AND (p[j]= 'o') AND (p[j+1] = 'e')THEN BEGIN (* s = ï¿½, p = oe *)
         Inc(i);
         Dec(offset);
         j := j + 2;
-    END ELSE IF (p[j] = 'ö') AND (s[i] = 'o') AND (s[i+1] = 'e') THEN BEGIN (* s = oe, p = ö *)
+    END ELSE IF (p[j] = 'ï¿½') AND (s[i] = 'o') AND (s[i+1] = 'e') THEN BEGIN (* s = oe, p = ï¿½ *)
         Inc(j);
         Inc(offset);
         i := i + 2;
@@ -509,16 +509,16 @@ BEGIN (* PatternMatching *)
   //Test(BoyerMoore);
   //WriteLn('RabinKarp');
   //Test(RabinKarp);
-  WriteLn(WeakSerach('Straß', 'as'));
-  WriteLn(WeakSerach('Straß', 'aß'));
-  WriteLn(WeakSerach('Straß', 'ass'));
+  WriteLn(WeakSerach('Straï¿½', 'as'));
+  WriteLn(WeakSerach('Straï¿½', 'aï¿½'));
+  WriteLn(WeakSerach('Straï¿½', 'ass'));
   WriteLn(WeakSerach('Strass', 'as'));
-  WriteLn(WeakSerach('Strass', 'aß'));
+  WriteLn(WeakSerach('Strass', 'aï¿½'));
   WriteLn(WeakSerach('Strass', 'ass'));
-  WriteLn(WeakSerach1('Soehne', 'hneö'));
+  WriteLn(WeakSerach1('Soehne', 'hneï¿½'));
   WriteLn(WeakSerach1('Soehne', 'Soehne'));
-  WriteLn(WeakSerach1('Söhne', 'Soehne'));
-  WriteLn(WeakSerach1('Söhne', 'Söhne'));
+  WriteLn(WeakSerach1('Sï¿½hne', 'Soehne'));
+  WriteLn(WeakSerach1('Sï¿½hne', 'Sï¿½hne'));
   WriteLn(WeakSerach2('AACD', 'ACD'));
   WriteLn(WeakSerach2('ACD', 'AACD'));
   WriteLn(WeakSerach2('ACD', 'CCC'));
