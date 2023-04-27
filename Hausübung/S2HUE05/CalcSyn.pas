@@ -18,36 +18,44 @@ IMPLEMENTATION
   *)
   (* Expr = Term | Term '+' Expr | Term '-' Expr .*)
 
-  PROCEDURE Expr; FORWARD;
-  PROCEDURE Term; FORWARD;
-  PROCEDURE Fact; FORWARD;
+  PROCEDURE Expr(VAR e: STRING); FORWARD;
+  PROCEDURE Term(VAR t: STRING); FORWARD;
+  PROCEDURE Fact(VAR f: STRING); FORWARD;
 
   PROCEDURE Start;
+    VAR
+      x: STRING;
   BEGIN (* Start *)
     success := TRUE;
-    Expr; IF NOT success THEN Exit;
+    Expr(x); IF NOT success THEN Exit;
+    Write(x);
     IF sy <> eofSy THEN BEGIN success := FALSE; Exit; END;
     NewSy;
   END; (* Start *)
   
  (* Expr = Term { '+' Term | '-' Term } . *)
-  PROCEDURE Expr;
+  PROCEDURE Expr(VAR e: STRING);
+    VAR
+      t: STRING;
   BEGIN (* Expr *)
-    Term; IF NOT success THEN EXIT;
+    Term(t); IF NOT success THEN EXIT;
+    (*SEM*)
+    e := t;
+    (*ENDSEM*)
     WHILE (sy = plusSy) OR (sy = minusSy) DO BEGIN
       CASE sy OF
         plusSy: BEGIN
                   NewSy;
-                  Term; IF NOT success THEN EXIT;
+                  Term(t); IF NOT success THEN EXIT;
                   (*SEM*)
-                  Write('+');
+                  e  := '+' + e  + ' ' + t;
                   (*ENDSEM*)
                 END;
         minusSy:BEGIN
                   NewSy;
-                  Term; IF NOT success THEN EXIT;
+                  Term(t); IF NOT success THEN EXIT;
                   (*SEM*)
-                  Write('-');
+                  e := '-' + e  + ' ' + t;
                   (*ENDSEM*)
                 END;
       END; (* CASE *)
@@ -56,43 +64,57 @@ IMPLEMENTATION
 
 
 (* Term = Fact { '*' Fact | '/' Fact} . *)
-  PROCEDURE Term;
+  PROCEDURE Term(VAR t: STRING);
+    VAR
+     f: STRING;
   BEGIN (* Term *)
-    Fact; IF NOT success THEN EXIT;
+    Fact(f); IF NOT success THEN EXIT;
+    t := f;
     WHILE (sy = mulSy) OR (sy = divSy) DO BEGIN
       CASE sy OF
         mulSy: BEGIN
                   NewSy;
-                  Fact; IF NOT success THEN EXIT;
+                  Fact(f); IF NOT success THEN EXIT;
                   (*SEM*)
-                  Write('*');
+                  t := '*'+ t + ' ' + f;
                   (*ENDSEM*)
                 END;
         divSy: BEGIN
                   NewSy;
-                  Fact; IF NOT success THEN EXIT;
+                  Fact(f); IF NOT success THEN EXIT;
                   (*SEM*)
-                  Write('/');
+                   t := '/' + t  + ' ' + f;
                   (*ENDSEM*)
                 END;
       END; (* CASE *)
     END;    
   END;(* Term *)
 
-  (* Fact = number | '(' Expr ')' . *)
-  PROCEDURE Fact;
+  (* Fact = number | ident '(' Expr ')' . *)
+  PROCEDURE Fact(VAR f: STRING);
+  VAR
+    e: STRING;
   BEGIN (* Fact *)
     CASE sy OF
+      identSy : BEGIN
+                  (*SEM *)
+                  f := charVal;
+                  (*ENDSEM*)
+                  NewSy;
+                END;
       numSy: BEGIN 
                 (*SEM*)
+                //Str(numberVal, numberValStr);
+                f := '1';
                 Write(' ', numberVal, ' ');
                 (*ENDSEM*)
                 NewSy; (*skip leftbarsy*)
               END;
       leftParSy:  BEGIN
                    NewSy; (*skip leftbarsy*)
-                   Expr; IF NOT success THEN Exit;
+                   Expr(e); IF NOT success THEN Exit;
                    IF sy <> rightParSy THEN BEGIN success := FALSE; Exit; END;
+                   f := e;
                    NewSy;
                  END;
       ELSE BEGIN

@@ -2,14 +2,15 @@ UNIT CalcLex;
 
 INTERFACE
   TYPE
-    Symbol = (NumSy, PlusSy, MinusSy, 
+    Symbol = (IdentSy, NumSy, PlusSy, MinusSy, 
               MulSy, DivSy, 
               LeftParSy, RightParSy, 
               NoSy, EofSy);
   VAR
     sy: Symbol; (* current symbol *)
     numberVal: INTEGER;
-  PROCEDURE InitLex(s: STRING);
+    charVal: CHAR;
+  PROCEDURE InitLex(s: STRING); 
   PROCEDURE NewSy;
 
 IMPLEMENTATION
@@ -49,6 +50,10 @@ IMPLEMENTATION
       '/': BEGIN sy := DivSy; NewCh; END;
       '(': BEGIN sy := LeftParSy; NewCh; END;
       ')': BEGIN sy := RightParSy; NewCh; END;
+      'a'..'z': BEGIN
+                     charVal := ch;
+                     sy := IdentSy; NewCh; 
+                END;
       eofCh: BEGIN sy := EofSy; NewCh; END;
       '0'..'9': BEGIN 
                   numberVal := Ord(ch) - Ord('0');
