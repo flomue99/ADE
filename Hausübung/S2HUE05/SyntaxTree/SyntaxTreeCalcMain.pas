@@ -1,13 +1,12 @@
-(* CalcMain:                                                 MFL, 2023-05-01 *)
+(* SyntaxTreeCalcMain:                                       MFL, 2023-04-19 *)
 (* ------                                                                    *)
-(* Input, Output, Syntax Error                                               *)
+(* SyntaxTreeCalcMain                                                        *)
 (* ========================================================================= *)
-PROGRAM CalcMain;
-USES CalcLex, CalcSyn;
-
+PROGRAM SyntaxTreeCalcMain;
+USES SyntaxTreeCalcLex, SyntaxTreeCalcSyn;
 VAR
   s: STRING;
-BEGIN (* CalcMain *) 
+BEGIN (* SyntaxTreeCalcMain *) 
   WriteLn('Expr >');
   ReadLn(s);
   InitLex(s);
@@ -15,4 +14,4 @@ BEGIN (* CalcMain *)
   WriteLn();
   IF success THEN WriteLn('Parsed succesfully')
   ELSE WriteLn('Syntax Error');
-END. (* CalcMain *)
+END. (* SyntaxTreeCalcMain *)

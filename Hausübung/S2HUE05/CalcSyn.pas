@@ -1,3 +1,7 @@
+(* CalcSyn:                                                  MFl, 2023-05-02 *)
+(* ------                                                                    *)
+(* syntax parser                                                             *)
+(* ========================================================================= *)
 UNIT CalcSyn;
 
 INTERFACE
@@ -8,15 +12,6 @@ INTERFACE
 
 IMPLEMENTATION
    USES CalcLex;
-  
-  (*
-  G(Start):
-  Start = Expr eofSy .
-  Expr = Term | Term '+' Expr | Term '-' Expr .
-  Term = Fact | Fact '*' Term | Fact '/' Term .
-  Fact = number | '(' Expr ')' .
-  *)
-  (* Expr = Term | Term '+' Expr | Term '-' Expr .*)
 
   PROCEDURE Expr(VAR e: STRING); FORWARD;
   PROCEDURE Term(VAR t: STRING); FORWARD;
@@ -24,97 +19,86 @@ IMPLEMENTATION
 
   PROCEDURE Start;
     VAR
-      x: STRING;
+      e: STRING;
   BEGIN (* Start *)
     success := TRUE;
-    Expr(x); IF NOT success THEN Exit;
-    Write(x);
+    Expr(e); IF NOT success THEN Exit;
     IF sy <> eofSy THEN BEGIN success := FALSE; Exit; END;
     NewSy;
+    (*SEM*)
+    WriteLn(e);
+    (*ENDSEM*)
   END; (* Start *)
   
- (* Expr = Term { '+' Term | '-' Term } . *)
   PROCEDURE Expr(VAR e: STRING);
     VAR
       t: STRING;
   BEGIN (* Expr *)
-    Term(t); IF NOT success THEN EXIT;
-    (*SEM*)
-    e := t;
-    (*ENDSEM*)
+    Term(e); IF NOT success THEN EXIT;
     WHILE (sy = plusSy) OR (sy = minusSy) DO BEGIN
       CASE sy OF
         plusSy: BEGIN
                   NewSy;
                   Term(t); IF NOT success THEN EXIT;
                   (*SEM*)
-                  e  := '+' + e  + ' ' + t;
+                  e  := '+ ' + e + t;
                   (*ENDSEM*)
                 END;
         minusSy:BEGIN
                   NewSy;
                   Term(t); IF NOT success THEN EXIT;
                   (*SEM*)
-                  e := '-' + e  + ' ' + t;
+                  e :=  '- ' + e  + t;
                   (*ENDSEM*)
                 END;
       END; (* CASE *)
     END; (* WHILE *)
   END; (* Expr *)
 
-
-(* Term = Fact { '*' Fact | '/' Fact} . *)
   PROCEDURE Term(VAR t: STRING);
     VAR
      f: STRING;
   BEGIN (* Term *)
-    Fact(f); IF NOT success THEN EXIT;
-    t := f;
+    Fact(t); IF NOT success THEN EXIT;
     WHILE (sy = mulSy) OR (sy = divSy) DO BEGIN
       CASE sy OF
         mulSy: BEGIN
                   NewSy;
                   Fact(f); IF NOT success THEN EXIT;
                   (*SEM*)
-                  t := '*'+ t + ' ' + f;
+                  t := '* ' + t + f;
                   (*ENDSEM*)
                 END;
         divSy: BEGIN
                   NewSy;
                   Fact(f); IF NOT success THEN EXIT;
                   (*SEM*)
-                   t := '/' + t  + ' ' + f;
+                   t := '/ ' + t + f;
                   (*ENDSEM*)
                 END;
       END; (* CASE *)
     END;    
   END;(* Term *)
 
-  (* Fact = number | ident '(' Expr ')' . *)
   PROCEDURE Fact(VAR f: STRING);
-  VAR
-    e: STRING;
   BEGIN (* Fact *)
     CASE sy OF
       identSy : BEGIN
-                  (*SEM *)
-                  f := charVal;
+                  (*SEM*)
+                  f := identVal + ' ';
                   (*ENDSEM*)
                   NewSy;
                 END;
       numSy: BEGIN 
-                (*SEM*)
-                //Str(numberVal, numberValStr);
-                f := '1';
-                Write(' ', numberVal, ' ');
-                (*ENDSEM*)
-                NewSy; (*skip leftbarsy*)
-              END;
+              (*SEM*)
+              f := numberValStr + ' ';
+              (*ENDSEM*)
+              NewSy;
+            END;
       leftParSy:  BEGIN
-                   NewSy; (*skip leftbarsy*)
-                   Expr(e); IF NOT success THEN Exit;
+                   NewSy;
+                   Expr(f); IF NOT success THEN Exit;
                    IF sy <> rightParSy THEN BEGIN success := FALSE; Exit; END;
-                   f := e;
                    NewSy;
                  END;
       ELSE BEGIN

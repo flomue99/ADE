@@ -1,8 +1,8 @@
-(* CalcLex:                                                  MFL, 2023-05-02 *)
+(* SyntaxTreeCalcLex:                                        MFL, 2023-05-02 *)
 (* ------                                                                    *)
-(* CalcLex prg                                                               *)
+(* Calxlex Unit                                                              *)
 (* ========================================================================= *)
-UNIT CalcLex;
+UNIT SyntaxTreeCalcLex;
 
 INTERFACE
   TYPE
@@ -38,7 +38,7 @@ IMPLEMENTATION
 
   PROCEDURE InitLex(s: STRING);
   BEGIN (* InitLex *)
-    CalcLex.s := s;
+    SyntaxTreeCalcLex.s := s;
     pos := 0;
     NewCh;
     NewSy;
@@ -55,7 +55,7 @@ IMPLEMENTATION
       '(': BEGIN sy := LeftParSy; NewCh; END;
       ')': BEGIN sy := RightParSy; NewCh; END;
       'a'..'z': BEGIN
-                     identval := ch;
+                     identVal := ch;
                      sy := IdentSy; NewCh; 
                 END;
       eofCh: BEGIN sy := EofSy; NewCh; END;
@@ -73,5 +73,6 @@ IMPLEMENTATION
     END; (* case *)
   END; (* NewSy *)
 
-BEGIN (* CalcLex *)
-END. (* CalcLex *)
+BEGIN (* SyntaxTreeCalcLex *)
+  
+END. (* SyntaxTreeCalcLex *)
