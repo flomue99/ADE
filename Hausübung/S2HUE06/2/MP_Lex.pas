@@ -11,7 +11,9 @@ INTERFACE
               leftParSy, rightParSy,
               plusSy, minusSy,
               mulSy, divSy,
-              numSy
+              numSy,
+              ifSy, thenSy, elseSy,
+              whileSy, doSy
              );
   VAR 
     sy : Symbol;
@@ -89,10 +91,13 @@ IMPLEMENTATION
       '(': BEGIN sy := leftParSy; NewCh; END;
       ')': BEGIN sy := rightParSy; NewCh; END;
       '0'..'9': BEGIN 
-                  WHILE ch IN ['0'..'9']  DO BEGIN
+                  numberVal := Ord(ch) - Ord('0');
+                  NewCh;
+                  WHILE ch in ['0'..'9'] DO BEGIN
+                    numberVal := numberVal * 10 + Ord(ch) - Ord('0');
                     NewCh;
                   END;
-                  sy := numSy;
+                  sy := NumSy
                 END;
       'a'..'z','A'..'Z','_': BEGIN 
                            identStr := LowerCase(ch);
@@ -101,13 +106,18 @@ IMPLEMENTATION
                               identStr := identStr + LowerCase(ch);
                               NewCh;
                            END; (* WHILE *)
-                           IF identStr = 'program' THEN sy := programSy
-                           ELSE IF identStr = 'begin' THEN sy := beginSy
+                           IF identStr = 'begin' THEN sy := beginSy
                            ELSE IF identStr = 'end' THEN sy := endSy
-                           ELSE IF identStr = 'read' THEN sy := readSy
-                           ELSE IF identStr = 'write' THEN sy := writeSy
-                           ELSE IF identStr = 'var' THEN sy := varSy
                            ELSE IF identStr = 'integer' THEN sy := integerSy
+                           ELSE IF identStr = 'program' THEN sy := programSy
+                           ELSE IF identStr = 'read' THEN sy := readSy
+                           ELSE IF identStr = 'var' THEN sy := varSy
+                           ELSE IF identStr = 'write' THEN sy := writeSy
+                           ELSE IF identStr = 'if' THEN sy := ifSy
+                           ELSE IF IdentStr = 'then' THEN sy := thenSy
+                           ELSE IF IdentStr = 'else' THEN sy := elseSy
+                           ELSE IF IdentStr = 'while' THEN sy := whileSy
+                           ELSE IF IdentStr = 'do' THEN sy := doSy
                            ELSE sy := identSy;
                          END;
       eofCh: BEGIN sy := eofSy; NewCh; END;

@@ -1,6 +1,6 @@
 (* Main program for MiniPascal interpeter *)
 PROGRAM MPI;
-USES MP_Lex, MP_Syn;
+USES MP_Lex, MP_SEM;
 
 VAR inFileName : STRING;
 BEGIN
