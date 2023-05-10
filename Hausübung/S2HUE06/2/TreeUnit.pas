@@ -2,8 +2,6 @@
 (* ------                                                                    *)
 (* Tree type, Procedures and functions for the tree optimization             *)
 (* ========================================================================= *)
-
-
 UNIT TreeUnit;
 
 INTERFACE

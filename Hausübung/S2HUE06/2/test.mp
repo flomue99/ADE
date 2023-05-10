@@ -1,4 +1,4 @@
-PROGRAM SVP;
+PROGRAM Test;
 VAR
   a, b: INTEGER;
 BEGIN
@@ -6,4 +6,5 @@ BEGIN
   Read(b);
   Write((((0+(17+4)*1) + (0+(17+4)*1)) / 2) * (a + b));
   Write((((0+(17+4)*1) + (0+(17+4)*1)) / 2) * (9 + 1));
+  Write(0 + (17 + 4) * 1);
 END.

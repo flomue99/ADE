@@ -149,8 +149,7 @@ IMPLEMENTATION
                    IF sy <> assignSy THEN BEGIN success := FALSE; Exit; END;
                    NewSy;
 
-                   Expr(e); IF NOT success THEN Exit;
-                   WriteTreeGraphically(e);
+                   Expr(e); IF NOT success THEN BEGIN DisposeTree(e); Exit; END;
                    EmitCodeForExprTree(e);
                    DisposeTree(e);
                    (* SEM *)
@@ -178,8 +177,7 @@ IMPLEMENTATION
                    IF sy <> leftParSy THEN BEGIN success := FALSE; Exit; END;
                    NewSy;
 
-                   Expr(e); IF NOT success THEN Exit;
-                   WriteTreeGraphically(e);
+                   Expr(e); IF NOT success THEN BEGIN DisposeTree(e); Exit; END;
                    EmitCodeForExprTree(e);
                    DisposeTree(e);
                    (* SEM *)
@@ -346,7 +344,7 @@ IMPLEMENTATION
                  f := NIL;
                  Fact(f); 
                  IF NOT success THEN Exit;
-                 IF (NOT IsOne(f^.val)) THEN BEGIN
+                 IF (NOT IsZero(f^.val)) THEN BEGIN
                    IF (t^.valType = 2) AND (f^.valType = 2) THEN BEGIN (* 2 numbers *)
                        t := NewNode(CalcNewValue(t, f, '/'),2);
                     END ELSE BEGIN
@@ -377,7 +375,8 @@ IMPLEMENTATION
       identSy: BEGIN 
                   (* SEM *)
                   IF NOT IsDecl(identstr) THEN BEGIN
-                    SemErr('variable is not declared')
+                    SemErr('variable is not declared');
+                    f:= NIL;
                   END ELSE BEGIN 
                     f := NewNode(identStr, 3);
                   END;

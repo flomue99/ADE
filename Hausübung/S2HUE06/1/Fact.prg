@@ -1,21 +1,12 @@
 PROGRAM Fact;
   VAR
-    a, b, cs, f, n, test: INTEGER;
+    f, n: INTEGER;
 BEGIN
-  READ(a);
-  READ(b);
-  cs := (a * a) + (b * b);
-  WRITE(cs);
   READ(n);
-  f := n;
-  n := n - 1;
-  test := 1;
+  f := n; n := n - 1;
   WHILE n DO BEGIN
-  	IF test THEN
-  	BEGIN
-  		f := n * f;
-  		n := n - 1;
-  	END;
+    f := n * f;
+    n := n - 1;
   END;
   WRITE(f);
 END. 
