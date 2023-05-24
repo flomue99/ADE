@@ -1,113 +1,155 @@
-(* Title:                                                 Author, 2023-05-24 *)
-(* ------                                                                    *)
-(* Description                                                               *)
-(* ========================================================================= *)
-PROGRAM OOPShapes;
-
-CONST
-  max  = 100;
-
+PROGRAM OOShapes;
+CONST max = 100;
 TYPE
   Shape = ^ShapeObj;
   ShapeObj = OBJECT
-              borderColor: STRING;
-              borderWidth: INTEGER;
-              CONSTRUCTOR Init;
-              PROCEDURE Draw; VIRTUAL; ABSTRACT;
-              PROCEDURE Move(dx, dy : INTEGER); VIRTUAL; ABSTRACT;
-              DESTRUCTOR Done; VIRTUAL;
+               borderColor : STRING;
+               borderWidth : INTEGER;
+               CONSTRUCTOR Init;
+               CONSTRUCTOR InitCopy(original : Shape);
+               PROCEDURE Draw; VIRTUAL; ABSTRACT; 
+               PROCEDURE Move(dx, dy : INTEGER); VIRTUAL; ABSTRACT; 
+               FUNCTION DeepCopy : Shape; VIRTUAL; ABSTRACT;
+               DESTRUCTOR Done; VIRTUAL;
              END;
 
   Line = ^LineObj;
   LineObj = OBJECT(ShapeObj)
-              x1, y1, x2, y2: INTEGER;
-              CONSTRUCTOR Init(x1, y1, x2, y2: INTEGER);
+              x1, y1, x2, y2 : INTEGER;
+              CONSTRUCTOR Init(x1, y1, x2, y2 : INTEGER);
+              CONSTRUCTOR InitCopy(original : Line);
               PROCEDURE Draw; VIRTUAL;
               PROCEDURE Move(dx, dy : INTEGER); VIRTUAL;
+              FUNCTION DeepCopy : Shape; VIRTUAL;
             END;
-  
+
   Rectangle = ^RectangleObj;
   RectangleObj = OBJECT(ShapeObj)
-                  x, y, width, height: INTEGER;
-                  CONSTRUCTOR Init(x, y, width, height: INTEGER);
-                  PROCEDURE Draw; VIRTUAL;
-                  PROCEDURE Move(dx, dy: INTEGER); VIRTUAL;
+                   x, y, width, height : INTEGER;
+                   CONSTRUCTOR Init(x, y, w, h : INTEGER);
+                   CONSTRUCTOR InitCopy(original : Rectangle);
+                   PROCEDURE Draw; VIRTUAL;
+                   PROCEDURE Move(dx, dy : INTEGER); VIRTUAL;
+                   FUNCTION DeepCopy : Shape; VIRTUAL;
                  END;
 
   Circle = ^CircleObj;
   CircleObj = OBJECT(ShapeObj)
-               x, y, r: INTEGER;
-               CONSTRUCTOR Init(x, y, r: INTEGER);
-               PROCEDURE Draw; VIRTUAL;
-               PROCEDURE Move(dx, dy: INTEGER); VIRTUAL;
+                x, y, r : INTEGER;
+                CONSTRUCTOR Init(x, y, r : INTEGER);
+                CONSTRUCTOR InitCopy(original : Circle);
+                PROCEDURE Draw; VIRTUAL;
+                PROCEDURE Move(dx, dy : INTEGER); VIRTUAL;
+                FUNCTION DeepCopy : Shape; VIRTUAL;
               END;
 
   Composite = ^CompositeObj;
   CompositeObj = OBJECT(ShapeObj)
-                  numShapes: INTEGER;
-                  shapes: ARRAY [1..max] OF Shape;
-                  CONSTRUCTOR Init;
-                  DESTRUCTOR Done; VIRTUAL;
-                  PROCEDURE Move(dx, dy: INTEGER); VIRTUAL;
-                  PROCEDURE Draw; VIRTUAL;
-                  PROCEDURE Add(s: Shape);
-                 END;            
-  
-(*-----------------SHAPE----------------*)
+                   numShapes : INTEGER;
+                   shapes : ARRAY [1..max] OF Shape;
+                   CONSTRUCTOR Init;
+                   CONSTRUCTOR InitCopy(original : Composite);
+                   DESTRUCTOR Done; VIRTUAL;
+                   PROCEDURE Move(dx, dy : INTEGER); VIRTUAL;
+                   PROCEDURE Draw; VIRTUAL;
+                   PROCEDURE Add(s : Shape);
+                  FUNCTION DeepCopy : Shape; VIRTUAL;
+                 END; 
+
+(************ Shape **************)
 CONSTRUCTOR ShapeObj.Init;
 BEGIN
   borderWidth := 1;
   borderColor := 'black';
 END;
 
-DESTRUCTOR ShapeObj.Done;
+CONSTRUCTOR ShapeObj.InitCopy(original : Shape);
 BEGIN
-  (* empty*)
+  SELF.borderWidth := original^.borderWidth;
+  SELF.borderColor := original^.borderColor;
 END;
 
-(*-----------------LineObj----------------*)
-CONSTRUCTOR LineObj.Init(x1, y1, x2, y2: INTEGER);
+DESTRUCTOR ShapeObj.Done;
+BEGIN
+  (* empty *)
+END;
+
+(*********** LineObj *************)
+CONSTRUCTOR LineObj.Init(x1, y1, x2, y2 : INTEGER);
 BEGIN
   INHERITED Init;
   SELF.x1 := x1; SELF.y1 := y1;
   SELF.x2 := x2; SELF.y2 := y2;
 END;
 
-PROCEDURE LineObj.Move(dx, dy: INTEGER);
-BEGIN (* LineObj.Move *)
+CONSTRUCTOR LineObj.InitCopy(original : Line);
+BEGIN
+  INHERITED InitCopy(original);
+  SELF.x1 := original^.x1;
+  SELF.y1 := original^.y1;
+  SELF.x2 := original^.x2;
+  SELF.y2 := original^.y2;
+END;
+
+PROCEDURE LineObj.Move(dx, dy : INTEGER);
+BEGIN
   x1 := x1 + dx; y1 := y1 + dy;
   x2 := x2 + dx; y2 := y2 + dy;
-END; (* LineObj.Move *)
+END;
 
 PROCEDURE LineObj.Draw;
-BEGIN (* LineObj.Draw *)
-  WriteLn('<line x1="',x1,'" y1="',y1,'" x2="',x2,'" y2="', y2, '" stroke="', borderColor,'"/>');
-END; (* LineObj.Draw *)
+BEGIN
+  WriteLn('<line x1="',x1,'" y1="',y1,'" x2="',x2,'" y2="', y2,'" stroke="',
+          borderColor,'"/>');
+END;
 
-(*-----------------RectangleObj----------------*)
+FUNCTION LineObj.DeepCopy : Shape;
+VAR l : Line;
+BEGIN
+  New(l, InitCopy(@SELF));
+  DeepCopy := l;
+END;
 
-CONSTRUCTOR RectangleObj.Init(x, y, width, height: INTEGER);
+(******************* Rectangle ********************)
+CONSTRUCTOR RectangleObj.Init(x, y, w, h : INTEGER);
 BEGIN
   INHERITED Init;
   SELF.x := x;
   SELF.y := y;
-  SELF.width := width;
-  SELF.height := height;
+  SELF.width := w;
+  SELF.height := h;
 END;
 
-PROCEDURE RectangleObj.Move(dx, dy: INTEGER);
-BEGIN (* RectangleObj.Move *)
+CONSTRUCTOR RectangleObj.InitCopy(original : Rectangle);
+BEGIN
+  INHERITED InitCopy(original);
+  x := original^.x;
+  y := original^.y;
+  width := original^.width;
+  height := original^.height;
+END;
+
+PROCEDURE RectangleObj.Move(dx, dy : INTEGER);
+BEGIN
   x := x + dx;
   y := y + dy;
-END; (* RectangleObj.Move *)
+END;
 
 PROCEDURE RectangleObj.Draw;
-BEGIN (* RectangleObj.Draw *)
-  WriteLn('<rect x="', x ,'" y="', y ,'" width="', width ,'" height="', height ,'" stroke="', borderColor ,'" />');
-END; (* RectangleObj.Draw *)
+BEGIN
+  WriteLn('<rect x="',x ,'" y="',y ,'" width="', width
+          ,'" height="',height ,'" stroke="',borderColor ,'" />');
+END;
 
-(*-----------------CircleObj----------------*)
-CONSTRUCTOR CircleObj.Init(x, y, r: INTEGER);
+FUNCTION RectangleObj.DeepCopy : Shape;
+VAR r : Rectangle;
+BEGIN
+  New(r, InitCopy(@SELF));
+  DeepCopy := r;
+END;
+
+(*********************** Circle ********************)
+CONSTRUCTOR CircleObj.Init(x, y, r : INTEGER);
 BEGIN
   INHERITED Init;
   SELF.x := x;
@@ -115,78 +157,102 @@ BEGIN
   SELF.r := r;
 END;
 
-PROCEDURE CircleObj.Move(dx, dy: INTEGER);
-BEGIN (* CircleObj.Move *)
+CONSTRUCTOR CircleObj.InitCopy(original : Circle);
+BEGIN
+  INHERITED InitCopy(original);
+  x := original^.x;
+  y := original^.y;
+  r := original^.r;
+END;
+
+FUNCTION CircleObj.DeepCopy : Shape;
+VAR c : Circle;
+BEGIN
+  New(c, InitCopy(@SELF));
+  DeepCopy := c;
+END;
+
+PROCEDURE CircleObj.Move(dx, dy : INTEGER);
+BEGIN
   x := x + dx;
   y := y + dy;
-END; (* CircleObj.Move *)
+END;
 
 PROCEDURE CircleObj.Draw;
-BEGIN (* CircleObj.Draw *)
-  WriteLn('<circle cx="', x ,'" cy="', y ,'" r="', r ,'" stroke="',borderColor, '" />');
-END; (* CircleObj.Draw *)
+BEGIN
+  WriteLn('<circle cx="',x ,'" cy="', y, '" r="', r, '" stroke="',borderColor,'"/>');
+END;
 
-(*-----------------Composite----------------*)
+(******************* Composite *******************)
 CONSTRUCTOR CompositeObj.Init;
-  VAR
-    i: INTEGER;
+VAR i : INTEGER;
 BEGIN
   INHERITED Init;
   numShapes := 0;
-  FOR i := Low(shapes) TO High(shapes) DO BEGIN
-    shapes[i] := NIL;
-  END; (* FOR *)
+  FOR i := Low(shapes) TO High(shapes) DO 
+    shapes[i] := NIL;  
 END;
 
-PROCEDURE CompositeObj.Add(s: Shape);
-BEGIN (* CompositeObj.Add *)
+CONSTRUCTOR CompositeObj.InitCopy(original : Composite);
+VAR i : INTEGER;
+BEGIN
+  INHERITED InitCopy(original);
+  numShapes := original^.numShapes;
+  FOR i := 1 TO numShapes DO
+    shapes[i] := original^.shapes[i]^.DeepCopy;
+END;
+
+FUNCTION CompositeObj.DeepCopy : Shape;
+VAR c : Composite;
+BEGIN
+  New(c, InitCopy(@SELF));
+  DeepCopy := c;
+END;
+
+PROCEDURE CompositeObj.Add(s : Shape);
+BEGIN
   Inc(numShapes);
   IF numShapes <= max THEN BEGIN
     shapes[numShapes] := s;
   END ELSE BEGIN
-    WriteLn('ERROR');
+    WriteLn('Error');
     HALT;
   END;
-END; (* CompositeObj.Add *)
+END;
 
-PROCEDURE CompositeObj.Move(dx, dy: INTEGER);
-  VAR
-    i: INTEGER;
-BEGIN (* CompositeObj.Move *)
-  FOR i := 1 TO numShapes DO BEGIN
+PROCEDURE CompositeObj.Move(dx, dy : INTEGER);
+VAR i : INTEGER;
+BEGIN
+  FOR i := 1 TO numShapes DO
     shapes[i]^.Move(dx, dy);
-  END; (* FOR *)
-END; (* CompositeObj.Move *)
+END;
 
 PROCEDURE CompositeObj.Draw;
-  VAR
-    i: INTEGER;
-BEGIN (* CompositeObj.Draw *)
-  WriteLn('<g stroke="', borderColor,'" stroke-width="', borderWidth,'"> ');
-  FOR i := 1 TO numShapes DO BEGIN
+VAR i : INTEGER;
+BEGIN
+  WriteLn('<g stroke="', borderColor, '" stroke-width="', borderWidth, '" >');
+  FOR i := 1 TO numShapes DO
     shapes[i]^.Draw;
-  END; (* FOR *)
   WriteLn('</g>');
-END; (* CompositeObj.Draw *)
+END;
 
 DESTRUCTOR CompositeObj.Done;
-  VAR
-    i: INTEGER;
+VAR i : INTEGER;
 BEGIN
-  FOR i := 1 TO numShapes DO BEGIN
+  FOR i := 1 to numShapes DO
     Dispose(shapes[i], Done);
-  END; (* FOR *)
+  
   INHERITED Done;
 END;
 
 
-
-VAR
-  l: Line;
-  c: Circle;
-  r: Rectangle;
-  g: Composite;
-BEGIN (* OOPShapes *)
+VAR l : Line;
+    c : Circle;
+    r : Rectangle;
+    g : Composite;
+    gCopy : Shape;
+    
+BEGIN
   New(g, Init);
 
   New(c, Init(100, 100, 100));
@@ -194,6 +260,7 @@ BEGIN (* OOPShapes *)
 
   New(l, Init(100, 200, 100, 600));
   g^.Add(l);
+
 
   New(l, Init(100, 300, 0, 200));
   g^.Add(l);
@@ -205,13 +272,17 @@ BEGIN (* OOPShapes *)
   New(l, Init(100, 600, 200, 800));
   g^.Add(l);
 
-  New(r, Init(0, 0, 200, 800));
+  New(r, Init(0,0, 200, 800));
   g^.Add(r);
   
-  WriteLn('<svg viewBox="0 0 1000 1000" fill="none">');
-  g^.Move(50,50);
+  gCopy := g^.DeepCopy;
+  gCopy^.Move(400, 0);
+
+  WriteLn('<svg viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">');
   g^.Draw;
+  gCopy^.Draw;
   WriteLn('</svg>');
 
   Dispose(g, Done);
-END. (* OOPShapes *)
+  Dispose(gCopy, Done);
+END.
