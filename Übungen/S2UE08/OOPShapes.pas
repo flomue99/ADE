@@ -53,7 +53,7 @@ TYPE
                    PROCEDURE Move(dx, dy : INTEGER); VIRTUAL;
                    PROCEDURE Draw; VIRTUAL;
                    PROCEDURE Add(s : Shape);
-                  FUNCTION DeepCopy : Shape; VIRTUAL;
+                   FUNCTION DeepCopy : Shape; VIRTUAL;
                  END; 
 
 (************ Shape **************)

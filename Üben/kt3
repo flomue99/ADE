@@ -1,0 +1,56 @@
+Region = ^RegionObj;
+RegionObj = OBJECT(AreadObj);
+              BEGIN
+                PRIVATE
+                  n: INTEGER;
+                  areas: ARRAY [1..max] OF Area;
+                PUBLIC
+                  CONSTRUCTOR INIT(name: STRING);
+                  DESTRUCTOR Done; VIRTUAL;
+                  PROCDEDURE AddArea(a: Area);
+                  FUNCTION RecoveredPeople: INTEGER; VIRTUAL;
+              END;
+
+CONSTRUCTOR ReagionObj.INIT(name: STRING);
+  VAR 
+    i: INTEGER;
+BEGIN
+  INHERITED INIT(name);
+  n := 0;
+  FOR i := Low(areas) TO High(areas) BEGIN
+    areas[i] := NIL;
+  END;
+END;
+
+DESTRUCTOR ReagionObj.Done;
+  VAR
+    i:= INTEGER;
+BEGIN
+  FOR i := Low(areas) TO n BEGIN
+    Dispose(areas[i], Done);
+  END;
+  INHERITED Done;
+END;
+
+PROCDEDURE AreadObj.AddArea(a: Area);
+BEGIN
+  Inc(n);
+  IF n > max THEN BEGIN
+    Write... Error;
+    Halt;
+  END ELSE BEGIN
+    areas[n] := Area;
+  END;
+END;
+
+
+FUNCTION AreadObj.RecoveredPeople
+  VAR
+    sum,i: INTEGER;
+BEGIN
+  sum := 0;
+  FOR i := 0 TO n BEGIN;
+    sum := sum + areas[i].RecoveredPeople;
+  END;
+  RecoveredPeople := sum;
+END;

@@ -12,23 +12,24 @@ TYPE
   END; (* Node *)
   ListPtr = NodePtr;
   
-  L = ^ListObj;
+  List = ^ListObj;
   ListObj = OBJECT
               list: ListPtr;
               listSize: INTEGER;
               CONSTRUCTOR Init;
               PROCEDURE Add(val: INTEGER); VIRTUAL;
-              FUNCTION Contains(val: INTEGER): BOOLEAN;
+              FUNCTION Contains(val: INTEGER): BOOLEAN; VIRTUAL;
               FUNCTION Size: INTEGER;
               PROCEDURE Remove(val: INTEGER);
               PROCEDURE Clear;
               PROCEDURE WriteList;
-              DESTRUCTOR Done; VIRTUAL;
             END;
   
-  SL = ^SLObj;
-  SLObj = OBJECT(ListObj)
-            PROCEDURE Add(val: INTEGER); VIRTUAL;
+  SortedList = ^SortedListObj;
+  SortedListObj = OBJECT(ListObj)
+            //CONSTRUCTOR Init;
+            PROCEDURE Add(val: INTEGER); VIRTUAL;   
+            FUNCTION Contains(val: INTEGER): BOOLEAN; VIRTUAL;
           END;
 
 CONSTRUCTOR ListObj.Init;
@@ -53,26 +54,32 @@ PROCEDURE ListObj.Add(val: INTEGER);
 BEGIN (* ListObj.Add *)
   n := NewNode(val);
   Inc(listSize);
-  IF (list = NIL) THEN BEGIN  (*falls l NIL, wird neuer Knoten Kopf der Liste*)
+  IF (list = NIL) THEN BEGIN
     list := n;
   END ELSE BEGIN
     curr := list;
     WHILE (curr^.next <> NIL) DO BEGIN
-      curr := curr^.next; (*zeigt auf nächsten*)
+      curr := curr^.next; 
     END; (* WHILE *)
-    curr^.next := n; (*letzes element zeigt nun auf n*)
+    curr^.next := n; 
   END; (* IF *)
 END; (* ListObj.Add *)
 
 FUNCTION ListObj.Contains(val: INTEGER): BOOLEAN;
   VAR
     n: NodePtr;
+    found: BOOLEAN;
 BEGIN (* ListObj.Contains *)
   n := list;
-  WHILE (n <> NIL) AND (n^.value <> val)DO BEGIN
-    n := n^.next;
+  found := FALSE;
+  WHILE (Not found) AND (n <> NIL) AND (n^.value <= val)DO BEGIN
+    IF (n^.value = val) THEN BEGIN
+      found := TRUE;
+    END ELSE BEGIN
+      n := n^.next;  
+    END; (* IF *)
   END; (* WHILE *)
-  Contains := n <> NIL;
+  Contains := found;
 END; (* ListObj.Contains *)
 
 FUNCTION ListObj.Size: INTEGER;
@@ -110,9 +117,9 @@ PROCEDURE ListObj.Clear;
     n: NodePtr;
 BEGIN (* ListObj.Clear *)
   WHILE (list <> NIL) DO BEGIN
-      n := list^.next;  (*setzten auf zweites elemnts*)
-      Dispose(list); (* dispose kopf*)
-      List := n; (*neuer Kopf ist n*)
+      n := list^.next; 
+      Dispose(list); 
+      List := n;
   END; (* WHILE *)
 END; (* ListObj.Clear *)
 
@@ -123,21 +130,16 @@ BEGIN (* ListObj.Write *)
   n := list;
     WHILE (n <> NIL) DO BEGIN
       Write(n^.value, '-> ');
-      n := n^.next; (*set next node*)
+      n := n^.next;
     END; (* WHILE *)
   WriteLn('|');
 END; (* ListObj.Write *)
 
-// needed?ß
-DESTRUCTOR ListObj.Done;
-BEGIN (* ListObj.Done *)
-END; (* ListObj.Done *)
-
-PROCEDURE SLObj.Add(val: INTEGER);
+PROCEDURE SortedListObj.Add(val: INTEGER);
   VAR
     n: NodePtr;
     pred, succ: NodePtr;
-BEGIN (* SLObj.Add *)
+BEGIN (* SortedListObj.Add *)
   n := NewNode(val);
   Inc(listSize);
   IF (list = NIL) THEN BEGIN
@@ -156,49 +158,60 @@ BEGIN (* SLObj.Add *)
       pred^.next := n;
     END; (* IF *)
   END; (* IF *)
-END; (* SLObj.Add *)
+END; (* SortedListObj.Add *)
+
+FUNCTION SortedListObj.Contains(val: INTEGER): BOOLEAN;
+  VAR
+    n: NodePtr;
+BEGIN (* SortedListObj.Contains *)
+  n := list;
+  WHILE (n <> NIL) AND (n^.value <> val)DO BEGIN
+    n := n^.next;
+  END; (* WHILE *)
+  Contains := n <> NIL;
+END; (* SortedListObj.Contains *)
 
 VAR
-  list: L;
-  sortedList: SL;
+  l: List;
+  sl: SortedList;
 BEGIN (* OOPListPrg *)
-  New(list, Init);
-  list^.Add(1);
-  list^.Add(4);
-  list^.Add(13);
-  list^.Add(0);
-  list^.Add(-1);
-  list^.Add(13);
-  list^.WriteList;
-  WriteLn(list^.Size);
-  WriteLn(list^.Contains(5));
-  WriteLn(list^.Contains(13));
-  list^.Remove(13);
-  WriteLn(list^.Contains(13));
-  WriteLn(list^.Size);
-  list^.Remove(1);
-  WriteLn(list^.Size);
-  list^.WriteList;
-  list^.Clear;
-  Dispose(list);
+  New(l, Init);
+  l^.Add(1);
+  l^.Add(4);
+  l^.Add(13);
+  l^.Add(0);
+  l^.Add(-1);
+  l^.Add(13);
+  l^.WriteList;
+  WriteLn('Size = ', l^.Size);
+  WriteLn('Contains(5) = ', l^.Contains(5));
+  WriteLn('Contains(13) = ', l^.Contains(13));
+  l^.Remove(13);
+  WriteLn('Contains(13) =', l^.Contains(13));
+  WriteLn('Size = ', l^.Size);
+  l^.Remove(1);
+  WriteLn('Size = ', l^.Size);
+  l^.WriteList;
+  l^.Clear;
+  Dispose(l);
   WriteLn('.................................');
-  New(sortedList, Init);
-  sortedList^.Add(1);
-  sortedList^.Add(4);
-  sortedList^.Add(13);
-  sortedList^.Add(0);
-  sortedList^.Add(-1);
-  sortedList^.Add(13);
-  sortedList^.WriteList;
-  WriteLn(sortedList^.Size);
-  WriteLn(sortedList^.Contains(5));
-  WriteLn(sortedList^.Contains(13));
-  sortedList^.Remove(13);
-  WriteLn(sortedList^.Contains(13));
-  WriteLn(sortedList^.Size);
-  sortedList^.Remove(1);
-  WriteLn(sortedList^.Size);
-  sortedList^.WriteList;
-  sortedList^.Clear;
-  Dispose(sortedList);
+  New(sl, Init);
+  sl^.Add(1);
+  sl^.Add(4);
+  sl^.Add(13);
+  sl^.Add(0);
+  sl^.Add(-1);
+  sl^.Add(13);
+  sl^.WriteList;
+  WriteLn('Size = ', sl^.Size);
+  WriteLn('Contains(5) =', sl^.Contains(5));
+  WriteLn('Contains(13) =', sl^.Contains(13));
+  sl^.Remove(13);
+  WriteLn('Contains(13) =', sl^.Contains(13));
+  WriteLn('Size = ', sl^.Size);
+  sl^.Remove(1);
+  WriteLn('Size = ', sl^.Size);
+  sl^.WriteList;
+  sl^.Clear;
+  Dispose(sl);
 END. (* OOPListPrg *)
