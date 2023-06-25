@@ -1,0 +1,52 @@
+ROCEDURE ChartWindowObj.OnMouseMove(mousePos: Point);
+		VAR 
+			rlVal: REAL;
+			newInt: INTEGER;
+	BEGIN (* ChartWindowObj.OnMouseMove *)
+		INHERITED OnMouseMove(mousePos);
+		IF (movePoint.isSelected) THEN BEGIN
+			rlVal := chartHeight / highest100;
+			Dispose(data^.dataPoints^.GetAt(movePoint.idx), Done);
+			newInt := Round((Height - chartOffsetY - mousePos.y) / rlVal);
+			data^.dataPoints^.SetAt(movePoint.idx, NewMLInteger(newInt));
+			Update;
+		END; (* IF *)
+	END; (* ChartWindowObj.OnMouseMove *)
+	
+	PROCEDURE ChartWindowObj.OnMousePressed(mousePos: Point);
+		VAR idx: INTEGER;
+	BEGIN (* ChartWindowObj.OnMousePressed *)
+		INHERITED OnMousePressed(mousePos);
+		idx := GetIdxOfPressedPoint(mousePos);
+		IF idx <> 0 THEN BEGIN
+			movePoint.idx := GetIdxOfPressedPoint(mousePos);
+			movePoint.isSelected := TRUE;
+		END; (* IF *)
+	END; (* ChartWindowObj.OnMousePressed *)
+
+	PROCEDURE ChartWindowObj.OnMouseReleased(mousePos: Point);
+	BEGIN (* ChartWindowObj.OnMouseReleased *)
+		INHERITED OnMouseReleased(mousePos);
+		movePoint.isSelected := FALSE;
+
+	END; (* ChartWindowObj.OnMouseReleased *)
+
+
+
+
+
+  p1.x := 50;
+  p1.y := 50;
+  p2.x := 50;
+  p2.y := 50 + maxVal;
+  strP.x := 20;
+  strP.y := 50 + maxVal;
+  strp.y := Round(strP.y * scale);
+  p2.y := Round(p2.y * scale);
+  p1.y := Round(p1.y * scale);
+  DrawLine(p1, p2, 1);
+  FOR i := 0 TO maxVal DIV 100 DO BEGIN
+    Str(i * 100, strVal);
+    DrawString(strP, strVal, 10);
+    strP.y := strP.y - Round(100*scale);
+  END; (* FOR *)
